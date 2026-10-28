@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-28
+
 ### Added
 
 - Complete rewrite of Sintonia in Jetpack Compose, for phones and Android TV.
@@ -20,4 +22,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Light, dark and automatic themes. Portuguese (Brazil), English and Spanish, switched without a restart.
 - Full D-pad navigation on Android TV.
 
-[Unreleased]: https://github.com/danielcrvo/sintonia/commits/main
+[Unreleased]: https://github.com/danielcrvo/sintonia/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/danielcrvo/sintonia/releases/tag/v1.0.0
