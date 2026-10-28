@@ -1,0 +1,62 @@
+name: APKs
+
+# Release APKs per ABI plus a universal one, named Sintonia-<version>-<abi>.apk.
+# A v* tag that matches versionName also publishes a GitHub Release (only with the real signing key).
+# The notes are the tag's section of CHANGELOG.md plus a guide to the APK files. A Release created by hand
+# for the tag is updated instead of replaced.
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  apks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Write the release notes
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: bash .github/scripts/release-notes.sh "${GITHUB_REF_NAME#v}" > "$RUNNER_TEMP/release-notes.md"
+
+      - name: Build and name the APKs
+        id: build
+        uses: ./.github/actions/build-apks
+        with:
+          keystore-base64: ${{ secrets.SIGNING_KEYSTORE_BASE64 }}
+          store-password: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          key-alias: ${{ secrets.SIGNING_KEY_ALIAS }}
+          key-password: ${{ secrets.SIGNING_KEY_PASSWORD }}
+
+      - name: Check the tag matches the version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          if [ "${GITHUB_REF_NAME}" != "v${{ steps.build.outputs.version }}" ]; then
+            echo "tag ${GITHUB_REF_NAME} does not match versionName ${{ steps.build.outputs.version }}" >&2
+            exit 1
+          fi
+
+      - name: Store APKs
+        uses: actions/upload-artifact@v7
+        with:
+          name: sintonia-apks
+          path: dist/
+          if-no-files-found: error
+
+      - name: Publish Release
+        if: startsWith(github.ref, 'refs/tags/v') && steps.build.outputs.signed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          notes="$RUNNER_TEMP/release-notes.md"
+          if gh release view "${GITHUB_REF_NAME}" > /dev/null 2>&1; then
+            gh release upload "${GITHUB_REF_NAME}" dist/*.apk dist/README.txt --clobber
+            gh release edit "${GITHUB_REF_NAME}" --title "Sintonia ${GITHUB_REF_NAME}" --notes-file "$notes"
+          else
+            gh release create "${GITHUB_REF_NAME}" dist/*.apk dist/README.txt \
+              --title "Sintonia ${GITHUB_REF_NAME}" --notes-file "$notes"
+          fi

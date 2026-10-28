@@ -1,0 +1,109 @@
+name: Build APKs
+description: Builds the release APKs per ABI plus a universal one, signs them and names them Sintonia-<version>[<label>]-<abi>.apk.
+
+inputs:
+  keystore-base64:
+    description: Base64 of the signing keystore. Empty means a throwaway key is used.
+    default: ''
+  store-password:
+    default: ''
+  key-alias:
+    default: ''
+  key-password:
+    default: ''
+  label:
+    description: Text added after the version in the file names and in the app version, for example -nightly-20261027-abc1234.
+    default: ''
+
+outputs:
+  signed:
+    description: "true when the real signing key was used."
+    value: ${{ steps.signing.outputs.signed }}
+  version:
+    description: The versionName of the app, without the label.
+    value: ${{ steps.name.outputs.version }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-java@v6
+      with:
+        distribution: temurin
+        java-version: 21
+
+    - uses: gradle/actions/setup-gradle@v6
+
+    - name: Signing key
+      id: signing
+      shell: bash
+      env:
+        KEYSTORE_BASE64: ${{ inputs.keystore-base64 }}
+        STORE_PASSWORD: ${{ inputs.store-password }}
+        KEY_ALIAS: ${{ inputs.key-alias }}
+        KEY_PASSWORD: ${{ inputs.key-password }}
+      run: |
+        if [ -n "$KEYSTORE_BASE64" ]; then
+          echo "$KEYSTORE_BASE64" | base64 -d > upload.jks
+          signed=true
+        else
+          store_password=throwaway123
+          key_password=throwaway123
+          key_alias=throwaway
+          keytool -genkeypair -keystore upload.jks -alias "$key_alias" -keyalg RSA -keysize 2048 -validity 30 \
+            -storepass "$store_password" -keypass "$key_password" -dname "CN=Sintonia throwaway"
+          STORE_PASSWORD=$store_password
+          KEY_PASSWORD=$key_password
+          KEY_ALIAS=$key_alias
+          signed=false
+        fi
+        {
+          echo "storeFile=upload.jks"
+          echo "storePassword=$STORE_PASSWORD"
+          echo "keyAlias=$KEY_ALIAS"
+          echo "keyPassword=$KEY_PASSWORD"
+        } > keystore.properties
+        if [ "$signed" = true ]; then
+          if ! keytool -list -keystore upload.jks -storepass "$STORE_PASSWORD" -alias "$KEY_ALIAS" -J-Duser.language=en > /dev/null 2>&1; then
+            echo "::error::Cannot open the keystore or find the alias. Check SIGNING_KEYSTORE_BASE64, SIGNING_STORE_PASSWORD and SIGNING_KEY_ALIAS."
+            exit 1
+          fi
+          if [ "$KEY_PASSWORD" != "$STORE_PASSWORD" ] \
+            && keytool -list -keystore upload.jks -storepass "$STORE_PASSWORD" -J-Duser.language=en 2> /dev/null | grep -q 'Keystore type: PKCS12'; then
+            echo "::error::A PKCS12 keystore uses the store password as the key password. Set SIGNING_KEY_PASSWORD to the same value as SIGNING_STORE_PASSWORD."
+            exit 1
+          fi
+        fi
+        echo "signed=$signed" >> "$GITHUB_OUTPUT"
+
+    - name: Build
+      shell: bash
+      env:
+        LABEL: ${{ inputs.label }}
+      run: ./gradlew assembleRelease -PsplitApks "-PversionSuffix=$LABEL" --no-daemon
+
+    - name: Name the APKs
+      id: name
+      shell: bash
+      env:
+        LABEL: ${{ inputs.label }}
+        SIGNED: ${{ steps.signing.outputs.signed }}
+      run: |
+        version=$(grep -m1 'versionName' app/build.gradle.kts | sed 's/.*"\(.*\)".*/\1/')
+        suffix=""
+        if [ "$SIGNED" != "true" ]; then suffix="-TEST"; fi
+        mkdir -p dist
+        for apk in app/build/outputs/apk/release/app-*-release*.apk; do
+          abi=$(basename "$apk" | sed -E 's/^app-(.*)-release.*\.apk$/\1/')
+          cp "$apk" "dist/Sintonia-${version}${LABEL}-${abi}${suffix}.apk"
+        done
+        cat > dist/README.txt <<'TXT'
+        Which APK to install:
+          arm64-v8a    recent phones and TVs (64-bit). When in doubt on a modern phone, use this.
+          armeabi-v7a  TVs, set-top boxes and older phones (32-bit).
+          x86_64       emulators and some Chromebooks.
+          universal    works on any of the above (larger).
+        Files ending in -TEST were signed with a throwaway key: fine to install and test,
+        but they cannot update a build signed with another key.
+        TXT
+        ls -la dist
+        echo "version=$version" >> "$GITHUB_OUTPUT"

@@ -1,0 +1,21 @@
+Sintonia es un reproductor de IPTV simple y rápido para celular y Android TV. Agregas la lista de tu propio proveedor y ves canales en vivo, películas y series en un solo lugar.
+
+IMPORTANTE: Sintonia es solo un reproductor. La app NO ofrece, vende ni incluye canales, películas, series ni ningún otro contenido. Para usarla necesitas una lista (Xtream Codes, enlace M3U o archivo M3U) proporcionada por ti o por tu proveedor, y eres responsable de ver solo contenido al que tengas derecho.
+
+QUÉ HACE LA APP
+• Agrega listas por Xtream Codes, enlace M3U o archivo M3U
+• En vivo con guía de programación (EPG), número de canal y progreso del programa actual
+• Películas y series con carátulas, detalles, temporadas y episodios
+• Continúa viendo donde te quedaste y siguiente episodio automático
+• Canales favoritos
+• Búsqueda en canales, películas y series
+• Renombrar y ocultar categorías
+• Audio y subtítulos, con idioma preferido en los ajustes
+• Control parental con PIN de 4 dígitos para bloquear categorías
+• Varias listas, eligiendo la activa
+• Tema claro, oscuro o automático
+• Español, English y Português (Brasil)
+• Funciona en celular y en Android TV, con control remoto
+
+PRIVACIDAD
+Todo se guarda solo en tu dispositivo. Sin cuenta, sin inicio de sesión, sin anuncios y sin recopilación de datos. La contraseña de la lista y el PIN se guardan en el almacenamiento seguro de Android.

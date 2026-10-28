@@ -1,0 +1,57 @@
+# Complements the default detekt config (buildUponDefaultConfig = true). detekt 2.x keys.
+style:
+  MagicNumber:
+    active: true
+    ignorePropertyDeclaration: true
+    ignoreCompanionObjectPropertyDeclaration: true
+    ignoreAnnotation: true
+    ignoreNamedArgument: true
+    ignoreEnums: true
+    ignoreExtensionFunctions: true
+    ignoreNumbers: ['-1', '0', '1', '2', '3', '4', '5', '6', '8', '10', '12', '16', '15', '20', '60', '100', '1000', '1000000', '1.1', '1.2', '1.6', '0.5', '9']
+    excludes: ['**/test/**', '**/designsystem/**', '**/*Test.kt']
+  MaxLineLength:
+    active: true
+    maxLineLength: 160
+    # One-line SQL reads better than wrapped; tests carry long sample data.
+    excludes: ['**/core/database/**', '**/test/**']
+  ReturnCount:
+    max: 6
+    excludeGuardClauses: true
+  ThrowsCount:
+    max: 3
+  LoopWithTooManyJumpStatements:
+    maxJumpCount: 5
+  DestructuringDeclarationWithTooManyEntries:
+    maxDestructuringEntries: 4
+  WildcardImport:
+    active: true
+naming:
+  MatchingDeclarationName:
+    active: false # Screen + UI models in the same unit is the project convention.
+  FunctionNaming:
+    ignoreAnnotated: ['Composable']
+  TopLevelPropertyNaming:
+    constantPattern: '[A-Z][A-Za-z0-9]*'
+exceptions:
+  TooGenericExceptionCaught:
+    # The app must not crash on network, disk or parser errors: catching Exception at these edges is intentional.
+    exceptionNames: ['NullPointerException', 'IllegalMonitorStateException', 'IndexOutOfBoundsException', 'ArrayIndexOutOfBoundsException']
+complexity:
+  LongParameterList:
+    allowedFunctionParameters: 12
+    allowedConstructorParameters: 12
+    ignoreDefaultParameters: true
+  LongMethod:
+    allowedLines: 120
+  CyclomaticComplexMethod:
+    allowedComplexity: 25
+    ignoreSimpleWhenEntries: true
+  TooManyFunctions:
+    allowedFunctionsPerFile: 30
+    allowedFunctionsPerClass: 35
+    allowedFunctionsPerInterface: 15
+  CognitiveComplexMethod:
+    allowedComplexity: 25
+  NestedBlockDepth:
+    allowedDepth: 5

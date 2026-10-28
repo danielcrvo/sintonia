@@ -1,0 +1,21 @@
+Sintonia is a simple, fast IPTV player for phones and Android TV. Add the playlist from your own provider and watch live channels, movies and series in one place.
+
+IMPORTANT: Sintonia is only a player. The app does NOT provide, sell or include channels, movies, series or any other content. To use it you need a playlist (Xtream Codes, M3U link or M3U file) supplied by you or your provider, and you are responsible for only watching content you have the right to watch.
+
+WHAT THE APP DOES
+• Add playlists via Xtream Codes, M3U link or M3U file
+• Live TV with a programme guide (EPG), channel numbers and progress of the current programme
+• Movies and series with posters, details, seasons and episodes
+• Continue watching where you left off, with automatic next episode
+• Favorite channels
+• Search across channels, movies and series
+• Rename and hide categories
+• Audio and subtitles, with a preferred language in settings
+• Parental controls with a 4-digit PIN to lock categories
+• Multiple playlists, choose the active one
+• Light, dark or automatic theme
+• English, Português (Brasil) and Español
+• Works on phones and Android TV, with remote control support
+
+PRIVACY
+Everything is stored only on your device. No account, no login, no ads and no data collection. The playlist password and the PIN are kept in Android's secure storage.

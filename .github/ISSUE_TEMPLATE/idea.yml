@@ -1,0 +1,14 @@
+name: Idea
+description: Suggest an improvement (remember the app is basic on purpose)
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What you would like
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Why it helps

@@ -1,0 +1,29 @@
+name: Bug
+description: Something does not work as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you expected and what you saw. Screenshots help, but without channel names or provider data.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+  - type: input
+    id: device
+    attributes:
+      label: Device and Android version
+      placeholder: "E.g. phone with Android 14 / TV with Android TV 12"
+  - type: input
+    id: version
+    attributes:
+      label: App version
+  - type: dropdown
+    id: list-type
+    attributes:
+      label: List type
+      options: [Xtream Codes, M3U link, M3U file, Not applicable]

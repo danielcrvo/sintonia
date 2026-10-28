@@ -1,0 +1,64 @@
+name: Nightly
+
+# Daily build of main, skipped when nothing changed in the last 24 hours.
+# With the real signing key it replaces the rolling "nightly" pre-release; otherwise it only stores an artifact.
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nightly
+  cancel-in-progress: false
+
+jobs:
+  nightly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Check for new commits
+        id: changes
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ] && [ -z "$(git log --since='24 hours ago' --oneline)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "label=-nightly-$(date -u +%Y%m%d)-$(git rev-parse --short=7 HEAD)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build and name the APKs
+        id: build
+        if: steps.changes.outputs.changed == 'true'
+        uses: ./.github/actions/build-apks
+        with:
+          keystore-base64: ${{ secrets.SIGNING_KEYSTORE_BASE64 }}
+          store-password: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          key-alias: ${{ secrets.SIGNING_KEY_ALIAS }}
+          key-password: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          label: ${{ steps.changes.outputs.label }}
+
+      - name: Store APKs
+        if: steps.changes.outputs.changed == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: sintonia-nightly
+          path: dist/
+          retention-days: 14
+
+      - name: Publish the nightly pre-release
+        if: steps.changes.outputs.changed == 'true' && steps.build.outputs.signed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete nightly --cleanup-tag --yes || true
+          gh release create nightly dist/*.apk dist/README.txt \
+            --prerelease --target "${GITHUB_SHA}" \
+            --title "Sintonia nightly (${{ steps.build.outputs.version }}${{ steps.changes.outputs.label }})" \
+            --notes "Automated build of main at ${GITHUB_SHA}. For testing, not for production."
