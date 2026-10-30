@@ -3,8 +3,13 @@ package com.danielcrvo.sintonia.feature
 import android.content.Context
 import android.provider.Settings
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -15,6 +20,8 @@ import com.danielcrvo.sintonia.R
 import com.danielcrvo.sintonia.core.data.importing.ImportProgress
 import com.danielcrvo.sintonia.core.data.importing.ImportStep
 import com.danielcrvo.sintonia.core.data.importing.StepStatus
+import com.danielcrvo.sintonia.core.designsystem.components.SEmptyState
+import com.danielcrvo.sintonia.core.designsystem.components.SheetSurface
 import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import com.danielcrvo.sintonia.core.designsystem.theme.ThemeMode
@@ -30,6 +37,12 @@ import com.danielcrvo.sintonia.core.model.Series
 import com.danielcrvo.sintonia.core.model.SeriesInfo
 import com.danielcrvo.sintonia.core.model.VodInfo
 import com.danielcrvo.sintonia.core.model.WatchProgress
+import com.danielcrvo.sintonia.core.parental.PinError
+import com.danielcrvo.sintonia.core.parental.PinPromptState
+import com.danielcrvo.sintonia.core.parental.PinPurpose
+import com.danielcrvo.sintonia.core.parental.ui.PinPromptContent
+import com.danielcrvo.sintonia.feature.lists.ui.addlist.AddListScreen
+import com.danielcrvo.sintonia.feature.lists.ui.addlist.AddListUiState
 import com.danielcrvo.sintonia.feature.lists.ui.importing.ImportScreen
 import com.danielcrvo.sintonia.feature.lists.ui.importing.ImportUiState
 import com.danielcrvo.sintonia.feature.live.ui.LiveScreen
@@ -40,6 +53,7 @@ import com.danielcrvo.sintonia.feature.movies.ui.MovieDetailUiState
 import com.danielcrvo.sintonia.feature.series.ui.SeriesDetailScreen
 import com.danielcrvo.sintonia.feature.series.ui.SeriesDetailUiState
 import com.danielcrvo.sintonia.feature.series.ui.SeriesInfoState
+import com.danielcrvo.sintonia.feature.welcome.ui.WelcomeScreen
 import com.danielcrvo.sintonia.testing.saveScreenshot
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.flowOf
@@ -154,6 +168,50 @@ class TvScreenshotTest {
             onRetry = {},
             onEditDetails = {},
         )
+    }
+
+    @Test
+    fun welcome() = tvShot(
+        "tv-welcome",
+        verify = {
+            rule.onNodeWithText(rule.activity.getString(R.string.welcome_title)).assertIsDisplayed()
+            rule.onNodeWithText(rule.activity.getString(R.string.welcome_add_list)).assertIsDisplayed()
+        },
+    ) { WelcomeScreen(onAddList = {}) }
+
+    @Test
+    fun addList() = tvShot(
+        "tv-addlist-xtream",
+        verify = { rule.onNodeWithText(rule.activity.getString(R.string.addlist_title)).assertIsDisplayed() },
+    ) {
+        AddListScreen(
+            state = AddListUiState(name = "Minha lista", server = "http://servidor.exemplo:8080", username = "ana", password = "segredo"),
+            onBack = {},
+            onTabChange = {},
+            onNameChange = {},
+            onServerChange = {},
+            onUsernameChange = {},
+            onPasswordChange = {},
+            onUrlChange = {},
+            onPickFile = {},
+            onSubmit = {},
+        )
+    }
+
+    @Test
+    fun pinPrompt() = tvShot("tv-pin-error") {
+        Box(Modifier.fillMaxSize().background(SintoniaTheme.colors.scrim), Alignment.BottomCenter) {
+            SheetSurface(onDismiss = {}) {
+                PinPromptContent(PinPromptState(PinPurpose.Unlock, error = PinError.Wrong, errorTick = 1), {}, {})
+            }
+        }
+    }
+
+    @Test
+    fun emptyState() = tvShot("tv-empty-state") {
+        Box(Modifier.fillMaxSize().background(SintoniaTheme.colors.background)) {
+            SEmptyState(icon = R.drawable.ic_tv, title = "Sem canais", message = "Esta categoria ainda não tem canais.", code = "HTTP 404")
+        }
     }
 
     private val movie = Movie(1, "m1", "Horizonte Perdido", null, "aventura", "2026", 7.8, "mp4", null)
