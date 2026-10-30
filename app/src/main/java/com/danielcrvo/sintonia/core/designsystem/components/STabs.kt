@@ -18,6 +18,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -46,6 +48,7 @@ fun STabs(
     val indicatorWidth by animateFloatAsState(widths.getOrElse(index) { 0f }, SintoniaTheme.motion.normal(), label = "tabWidth")
 
     val scroll = rememberScrollState()
+    val selectedTab = remember { FocusRequester() }
     var viewportWidth by remember { mutableIntStateOf(0) }
     LaunchedEffect(index, lefts.getOrElse(index) { 0f }, widths.getOrElse(index) { 0f }, viewportWidth) {
         val width = widths.getOrElse(index) { 0f }
@@ -71,7 +74,7 @@ fun STabs(
         Row(
             modifier = Modifier
                 .horizontalScroll(scroll)
-                .focusRestorer()
+                .focusRestorer(selectedTab)
                 .height(SintoniaTheme.heights.tabs)
                 .drawBehind {
                     val pad = tabPadding.toPx()
@@ -90,7 +93,8 @@ fun STabs(
                         .onGloballyPositioned {
                             lefts[i] = it.positionInParent().x
                             widths[i] = it.size.width.toFloat()
-                        }.sintoniaClickable(
+                        }.then(if (active) Modifier.focusRequester(selectedTab) else Modifier)
+                        .sintoniaClickable(
                             onClick = { onSelected(i) },
                             cornerRadius = SintoniaTheme.radii.control,
                             role = Role.Tab,

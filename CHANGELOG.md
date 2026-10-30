@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - On Android TV, the featured card on Home is a single focus stop instead of two overlapping ones.
 - On Android TV, the automatic update row in Settings takes one press of OK instead of two focus stops.
 - On Android TV, the My lists screen starts on the active list instead of the Add button, and the remove dialog starts on Cancel.
+- On Android TV, entering the category tabs puts focus on the selected tab instead of the first one.
 
 ## [1.0.0] - 2026-10-28
 
