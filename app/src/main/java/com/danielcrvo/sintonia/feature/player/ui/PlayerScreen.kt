@@ -56,6 +56,7 @@ import androidx.compose.ui.text.style.TextAlign
 import com.danielcrvo.sintonia.R
 import com.danielcrvo.sintonia.core.common.formatClock
 import com.danielcrvo.sintonia.core.common.formatDuration
+import com.danielcrvo.sintonia.core.common.rememberNowMillis
 import com.danielcrvo.sintonia.core.designsystem.components.ButtonVariant
 import com.danielcrvo.sintonia.core.designsystem.components.SButton
 import com.danielcrvo.sintonia.core.designsystem.components.SIcon
@@ -245,6 +246,7 @@ private fun handleKey(event: androidx.compose.ui.input.key.KeyEvent, state: Play
 }
 
 private const val SeekStepMs = 10_000L
+private const val ProgressTickMillis = 15_000L
 
 private val DirectionalKeys = setOf(Key.DirectionUp, Key.DirectionDown, Key.DirectionLeft, Key.DirectionRight)
 
@@ -405,6 +407,7 @@ private fun BottomInfo(state: PlayerUiState, position: State<Long>, actions: Pla
 private fun LiveBottom(state: PlayerUiState, modifier: Modifier) {
     val now = state.nowProgram
     val next = state.nextProgram
+    val clock = rememberNowMillis(ProgressTickMillis)
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.sm)) {
         if (now != null) {
             Row(horizontalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.md), verticalAlignment = Alignment.CenterVertically) {
@@ -426,7 +429,7 @@ private fun LiveBottom(state: PlayerUiState, modifier: Modifier) {
                     color = SintoniaTheme.colors.onImageMuted,
                 )
             }
-            SProgressBar(progress = { now.progressAt(System.currentTimeMillis()) }, height = SintoniaTheme.sizes.progressThin, onImage = true)
+            SProgressBar(progress = { now.progressAt(clock.value) }, height = SintoniaTheme.sizes.progressThin, onImage = true)
         } else {
             SText(stringResource(R.string.program_unknown), style = SintoniaTheme.typography.caption, color = SintoniaTheme.colors.onImageMuted)
         }

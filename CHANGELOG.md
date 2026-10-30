@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - The next episode card in the player shows the season and episode code in the app language, such as S1 · E5 in English.
 - The language picker shows Portuguese as Português (Brasil) in every app language.
 - The size of a picked list file follows the device formatting and language.
+- The progress bar of the current programme in the player moves while you watch a live channel.
 
 ## [1.0.0] - 2026-10-28
 
