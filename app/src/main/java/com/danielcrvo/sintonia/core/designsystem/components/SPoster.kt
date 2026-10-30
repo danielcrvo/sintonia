@@ -34,7 +34,8 @@ fun SPoster(
     val tv = SintoniaTheme.deviceClass == DeviceClass.Tv
     Column(
         modifier = modifier
-            .sintoniaClickable(onClick = onClick, cornerRadius = radius, focusScale = if (tv) 1.04f else 1f),
+            .sintoniaClickable(onClick = onClick, cornerRadius = radius, focusScale = if (tv) 1.04f else 1f)
+            .padding(SintoniaTheme.spacing.focusInset),
         verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.snug),
     ) {
         Box(

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -27,6 +28,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.isSpecified
 import com.danielcrvo.sintonia.R
 import com.danielcrvo.sintonia.core.designsystem.components.ButtonSize
 import com.danielcrvo.sintonia.core.designsystem.components.PosterShape
@@ -73,8 +75,8 @@ fun HomeScreen(
                     Section(R.string.home_continue) {
                         LazyRow(
                             modifier = Modifier.focusRestorer(),
-                            contentPadding = PaddingValues(horizontal = spacing.gutter),
-                            horizontalArrangement = Arrangement.spacedBy(spacing.md),
+                            contentPadding = PaddingValues(horizontal = spacing.gutter - spacing.focusInset),
+                            horizontalArrangement = Arrangement.spacedBy(spacing.md - spacing.focusInset * 2),
                         ) {
                             items(state.continueWatching, key = { it.key }) { item ->
                                 SPoster(
@@ -125,11 +127,12 @@ private fun Section(title: Int, content: @Composable () -> Unit) {
 @Composable
 private fun FeaturedCard(item: FeaturedItem, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val colors = SintoniaTheme.colors
+    val featuredHeight = SintoniaTheme.heights.featured
     val shape = RoundedCornerShape(SintoniaTheme.radii.card)
     Box(
         modifier
             .fillMaxWidth()
-            .aspectRatio(16f / 10f)
+            .then(if (featuredHeight.isSpecified) Modifier.height(featuredHeight) else Modifier.aspectRatio(16f / 10f))
             .clip(shape)
             .border(SintoniaTheme.strokes.hairline, colors.border, shape)
             .sintoniaClickable(onClick = onClick, cornerRadius = SintoniaTheme.radii.card),

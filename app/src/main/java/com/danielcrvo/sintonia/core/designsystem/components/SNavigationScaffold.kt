@@ -107,7 +107,8 @@ private fun SideMenu(items: List<NavItem>, selectedIndex: Int, onSelect: (Int) -
             .background(colors.background)
             .drawBehind {
                 drawRect(colors.border, Offset(size.width - hairline.toPx(), 0f), Size(hairline.toPx(), size.height))
-            }.padding(vertical = SintoniaTheme.spacing.xxl)
+            }.tvSafeArea()
+            .padding(vertical = SintoniaTheme.spacing.xxl)
             .focusRestorer(selectedFocus)
             .focusGroup(),
         horizontalAlignment = Alignment.CenterHorizontally,

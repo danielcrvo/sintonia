@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - On Android TV, a focused primary button now shows a visible focus ring.
 - On Android TV, the tabs line up with the screen content and the bottom action button keeps the same side margin as the rest of the screen.
 - On Android TV, the arrow keys leave a text field, so the forms can be filled using only the remote.
+- On Android TV, the Home highlight card fits the screen, the header and side menu keep a margin from the top edge, and the focus ring around a poster leaves room around its title.
 
 ## [1.0.0] - 2026-10-28
 

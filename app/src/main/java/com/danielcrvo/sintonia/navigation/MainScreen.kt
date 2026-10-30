@@ -34,6 +34,7 @@ import com.danielcrvo.sintonia.core.designsystem.components.SIcons
 import com.danielcrvo.sintonia.core.designsystem.components.SLogo
 import com.danielcrvo.sintonia.core.designsystem.components.SNavigationScaffold
 import com.danielcrvo.sintonia.core.designsystem.components.SText
+import com.danielcrvo.sintonia.core.designsystem.components.tvSafeArea
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import com.danielcrvo.sintonia.core.model.PlayerRequest
 import com.danielcrvo.sintonia.feature.catalog.ui.MoviesRoute
@@ -61,7 +62,13 @@ fun MainScreen(actions: MainActions, modifier: Modifier = Modifier) {
     )
     SNavigationScaffold(items = items, selectedIndex = selected, onSelect = { selected = it }, modifier = modifier) {
         val motion = SintoniaTheme.motion
-        Column(Modifier.fillMaxSize().background(SintoniaTheme.colors.background).statusBarsPadding()) {
+        Column(
+            Modifier
+                .fillMaxSize()
+                .background(SintoniaTheme.colors.background)
+                .statusBarsPadding()
+                .tvSafeArea(),
+        ) {
             MainHeader(selected, actions.onSearch, actions.onSettings)
             AnimatedContent(
                 modifier = Modifier.weight(1f).fillMaxWidth(),

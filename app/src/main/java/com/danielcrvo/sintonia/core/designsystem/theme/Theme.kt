@@ -72,7 +72,7 @@ fun SintoniaTheme(
     val tv = deviceClass == DeviceClass.Tv
     CompositionLocalProvider(
         LocalColors provides if (dark) DarkColors else LightColors,
-        LocalSpacing provides if (tv) Spacing(gutter = SpacingTvGutter, footer = SpacingTvGutter, safeVertical = SpacingTvSafeVertical) else Spacing(),
+        LocalSpacing provides if (tv) TvSpacing else Spacing(),
         LocalHeights provides if (tv) TvHeights else Heights(),
         LocalTypography provides if (tv) TvTypography else PhoneTypography,
         LocalMotion provides remember(reducedMotion) { Motion(reducedMotion) },

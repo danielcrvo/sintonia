@@ -69,6 +69,7 @@ fun CatalogScreen(
 ) {
     val colors = SintoniaTheme.colors
     val spacing = SintoniaTheme.spacing
+    val inset = spacing.focusInset
     val columns = if (SintoniaTheme.deviceClass == DeviceClass.Tv) 6 else 3
     val allLabel = stringResource(R.string.catalog_all)
     val categories = remember(state.categories) { state.categories.filter { it.count > 0 || it.name != it.originalName } }
@@ -121,9 +122,9 @@ fun CatalogScreen(
                 else -> LazyVerticalGrid(
                     columns = GridCells.Fixed(columns),
                     modifier = Modifier.fillMaxSize().focusRestorer(),
-                    contentPadding = PaddingValues(horizontal = spacing.gutter, vertical = spacing.md),
-                    horizontalArrangement = Arrangement.spacedBy(spacing.md),
-                    verticalArrangement = Arrangement.spacedBy(spacing.xl),
+                    contentPadding = PaddingValues(horizontal = spacing.gutter - inset, vertical = spacing.md - inset),
+                    horizontalArrangement = Arrangement.spacedBy(spacing.md - inset * 2),
+                    verticalArrangement = Arrangement.spacedBy(spacing.xl - inset * 2),
                 ) {
                     items(
                         count = items.itemCount,

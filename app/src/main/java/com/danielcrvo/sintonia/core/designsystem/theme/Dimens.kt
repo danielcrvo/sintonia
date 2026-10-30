@@ -18,6 +18,7 @@ data class Spacing(
     val gutter: Dp = 20.dp,
     val footer: Dp = 16.dp,
     val safeVertical: Dp = 0.dp,
+    val focusInset: Dp = 0.dp,
 )
 
 @Immutable
@@ -44,6 +45,7 @@ data class Heights(
     val bottomBar: Dp = 64.dp,
     val sidebar: Dp = 88.dp,
     val minTouch: Dp = 44.dp,
+    val featured: Dp = Dp.Unspecified,
 )
 
 @Immutable
@@ -129,9 +131,20 @@ val TvHeights = Heights(
     field = 56.dp,
     tabs = 48.dp,
     settingsRow = 60.dp,
+    featured = 300.dp,
 )
 
 val SpacingTvGutter = 40.dp
 
 // About 5% of a 540dp TV viewport, so content stays clear of the overscan edge.
 val SpacingTvSafeVertical = 27.dp
+
+// Keeps text clear of the focus ring, which TV draws inside the item.
+val SpacingTvFocusInset = 6.dp
+
+val TvSpacing = Spacing(
+    gutter = SpacingTvGutter,
+    footer = SpacingTvGutter,
+    safeVertical = SpacingTvSafeVertical,
+    focusInset = SpacingTvFocusInset,
+)
