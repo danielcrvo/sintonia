@@ -23,6 +23,7 @@ import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import com.danielcrvo.sintonia.core.designsystem.theme.ThemeMode
 import com.danielcrvo.sintonia.core.model.PlayerRequest
+import com.danielcrvo.sintonia.core.player.PlaybackStatus
 import com.danielcrvo.sintonia.core.player.PlayerSurface
 
 @Composable
@@ -83,7 +84,7 @@ fun PlayerRoute(
         when {
             state.panel != null -> viewModel.onClosePanel()
             state.upNext != null -> viewModel.onCancelNext()
-            deviceClass == DeviceClass.Tv && state.controlsVisible -> viewModel.hideControls()
+            deviceClass == DeviceClass.Tv && state.controlsVisible && state.playback.status != PlaybackStatus.Error -> viewModel.hideControls()
             else -> close()
         }
     }
