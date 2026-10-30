@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Fixed
 
 - On Android TV, the screen shown while a list loads no longer gets cut off. It now uses two columns and keeps a margin from the screen edge.
+- On Android TV, the welcome and add list screens also keep a margin from the top and bottom edges.
 
 ## [1.0.0] - 2026-10-28
 

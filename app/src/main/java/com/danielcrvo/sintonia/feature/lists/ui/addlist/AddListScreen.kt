@@ -36,6 +36,7 @@ import com.danielcrvo.sintonia.core.designsystem.components.SIcons
 import com.danielcrvo.sintonia.core.designsystem.components.STabs
 import com.danielcrvo.sintonia.core.designsystem.components.SText
 import com.danielcrvo.sintonia.core.designsystem.components.STextField
+import com.danielcrvo.sintonia.core.designsystem.components.tvSafeArea
 import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import com.danielcrvo.sintonia.feature.lists.domain.FieldError
@@ -65,7 +66,8 @@ fun AddListScreen(
         modifier = modifier
             .fillMaxSize()
             .background(colors.background)
-            .statusBarsPadding(),
+            .statusBarsPadding()
+            .tvSafeArea(),
     ) {
         SHeader(title = stringResource(R.string.addlist_title), onBack = onBack.takeIf { canGoBack })
         STabs(

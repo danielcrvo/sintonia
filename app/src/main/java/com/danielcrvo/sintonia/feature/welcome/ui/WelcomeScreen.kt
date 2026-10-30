@@ -28,6 +28,7 @@ import com.danielcrvo.sintonia.core.designsystem.components.SIcons
 import com.danielcrvo.sintonia.core.designsystem.components.SLogo
 import com.danielcrvo.sintonia.core.designsystem.components.SText
 import com.danielcrvo.sintonia.core.designsystem.components.initialFocusOnTv
+import com.danielcrvo.sintonia.core.designsystem.components.tvSafeArea
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
 @Composable
@@ -40,6 +41,7 @@ fun WelcomeScreen(onAddList: () -> Unit, modifier: Modifier = Modifier) {
             .background(colors.background)
             .statusBarsPadding()
             .navigationBarsPadding()
+            .tvSafeArea()
             .padding(horizontal = spacing.gutter, vertical = spacing.xxl),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -48,7 +50,8 @@ fun WelcomeScreen(onAddList: () -> Unit, modifier: Modifier = Modifier) {
                 .weight(1f)
                 .widthIn(max = SintoniaTheme.sizes.contentMaxWidth)
                 .fillMaxWidth()
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = spacing.lg),
             verticalArrangement = Arrangement.spacedBy(spacing.xxl, Alignment.CenterVertically),
         ) {
             Box(
