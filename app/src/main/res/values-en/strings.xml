@@ -78,7 +78,7 @@
     <string name="live_empty_title">No channels</string>
     <string name="live_empty_message">This category has no channels.</string>
     <string name="live_empty_favorites_title">No favorites yet</string>
-    <string name="live_empty_favorites_message">Tap a channel\'s star to keep it here.</string>
+    <string name="live_empty_favorites_message">Star a channel to keep it here.</string>
     <string name="live_see_all">See all channels</string>
     <string name="load_error_title">Could not load</string>
     <string name="filter_sort_by">Sort by</string>
@@ -239,7 +239,7 @@
     <string name="settings_auto_update">Automatic update</string>
     <string name="settings_auto_update_hint">Refreshes the guide and the list in the background.</string>
     <string name="categories_title">Categories</string>
-    <string name="categories_help">Tap a category to rename it. The switch shows or hides the category across the app.</string>
+    <string name="categories_help">Select a category to rename it. The switch shows or hides the category across the app.</string>
     <string name="categories_none_hidden">None hidden</string>
     <string name="categories_empty">No categories in this list.</string>
     <string name="categories_original">Original: %1$s</string>

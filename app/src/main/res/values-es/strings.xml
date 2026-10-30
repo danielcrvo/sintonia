@@ -79,7 +79,7 @@
     <string name="live_empty_title">Ningún canal</string>
     <string name="live_empty_message">Esta categoría no tiene canales.</string>
     <string name="live_empty_favorites_title">Aún no hay favoritos</string>
-    <string name="live_empty_favorites_message">Toca la estrella de un canal para guardarlo aquí.</string>
+    <string name="live_empty_favorites_message">Marca la estrella de un canal para guardarlo aquí.</string>
     <string name="live_see_all">Ver todos los canales</string>
     <string name="load_error_title">No se pudo cargar</string>
     <string name="filter_sort_by">Ordenar por</string>
@@ -246,7 +246,7 @@
     <string name="settings_auto_update">Actualización automática</string>
     <string name="settings_auto_update_hint">Renueva la guía y la lista en segundo plano.</string>
     <string name="categories_title">Categorías</string>
-    <string name="categories_help">Toca una categoría para renombrarla. El interruptor muestra u oculta la categoría en toda la app.</string>
+    <string name="categories_help">Selecciona una categoría para renombrarla. El interruptor muestra u oculta la categoría en toda la app.</string>
     <string name="categories_none_hidden">Ninguna oculta</string>
     <string name="categories_empty">Sin categorías en esta lista.</string>
     <string name="categories_original">Original: %1$s</string>
