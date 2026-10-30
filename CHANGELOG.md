@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - On Android TV, the welcome and add list screens also keep a margin from the top and bottom edges.
 - The next episode card in the player now shows the season and episode code in the app language, so English shows S1 · E5 instead of T1 · E5.
 - On Android TV, the not found screens and the player error no longer show a Back button. The remote's Back key already leaves them.
+- On Android TV, the featured card on Home is a single focus stop instead of two overlapping ones.
 
 ## [1.0.0] - 2026-10-28
 

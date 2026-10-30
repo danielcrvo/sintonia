@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -142,7 +143,13 @@ private fun FeaturedCard(item: FeaturedItem, onClick: () -> Unit, modifier: Modi
             SText(stringResource(R.string.home_featured).uppercase(), style = SintoniaTheme.typography.monoLabel, color = Color.White.copy(alpha = 0.7f))
             SText(item.title, style = SintoniaTheme.typography.heading, color = Color.White, maxLines = 2)
             item.meta?.let { SText(it, style = SintoniaTheme.typography.mono, color = Color.White.copy(alpha = 0.7f)) }
-            SButton(stringResource(R.string.detail_watch), onClick, leadingIcon = SIcons.Play, size = ButtonSize.Hero)
+            SButton(
+                stringResource(R.string.detail_watch),
+                onClick,
+                Modifier.focusProperties { canFocus = false },
+                leadingIcon = SIcons.Play,
+                size = ButtonSize.Hero,
+            )
         }
     }
 }
