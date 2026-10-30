@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
@@ -44,7 +43,7 @@ fun SPoster(
                 .fillMaxWidth()
                 .aspectRatio(shape.ratio)
                 .clip(coverShape)
-                .border(SintoniaTheme.strokes.hairline, if (colors.isDark) Color.White.copy(alpha = 0.08f) else Color.Black.copy(alpha = 0.08f), coverShape),
+                .border(SintoniaTheme.strokes.hairline, SintoniaTheme.colors.posterBorder, coverShape),
         ) {
             SImage(url = imageUrl, contentDescription = null, modifier = Modifier.matchParentSize())
             if (badge != null) {

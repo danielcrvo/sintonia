@@ -30,7 +30,7 @@ fun SDetailHero(
         Box(
             Modifier
                 .matchParentSize()
-                .background(Brush.verticalGradient(listOf(Color.Black.copy(alpha = 0.45f), Color.Transparent, background))),
+                .background(Brush.verticalGradient(listOf(SintoniaTheme.colors.imageShade.copy(alpha = 0.45f), Color.Transparent, background))),
         )
         if (SintoniaTheme.deviceClass != com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass.Tv) {
             SIconButton(

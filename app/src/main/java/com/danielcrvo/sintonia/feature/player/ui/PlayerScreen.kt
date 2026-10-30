@@ -127,7 +127,7 @@ fun PlayerScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(SintoniaTheme.colors.imageShade)
             .focusRequester(focus)
             .focusable()
             .onKeyEvent { event -> handleKey(event, state, actions) }
@@ -144,15 +144,15 @@ fun PlayerScreen(
             SText(
                 stringResource(fitLabel(state.videoFit)),
                 style = SintoniaTheme.typography.subheading,
-                color = Color.White,
+                color = SintoniaTheme.colors.onImage,
                 modifier = Modifier
-                    .background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(SintoniaTheme.radii.control))
+                    .background(SintoniaTheme.colors.imageDim, RoundedCornerShape(SintoniaTheme.radii.control))
                     .padding(horizontal = SintoniaTheme.spacing.lg, vertical = SintoniaTheme.spacing.sm),
             )
         }
 
         if (state.playback.status == PlaybackStatus.Loading) {
-            Box(Modifier.fillMaxSize(), Alignment.Center) { SSpinner(size = SintoniaTheme.sizes.spinnerHero, color = Color.White) }
+            Box(Modifier.fillMaxSize(), Alignment.Center) { SSpinner(size = SintoniaTheme.sizes.spinnerHero, color = SintoniaTheme.colors.onImage) }
         }
 
         AnimatedVisibility(
@@ -250,11 +250,13 @@ private val DirectionalKeys = setOf(Key.DirectionUp, Key.DirectionDown, Key.Dire
 
 @Composable
 private fun Controls(state: PlayerUiState, position: State<Long>, actions: PlayerActions, playPauseFocus: FocusRequester, interactive: Boolean) {
+    val imageShade = SintoniaTheme.colors.imageShade
+    val shade = Brush.verticalGradient(listOf(imageShade.copy(alpha = 0.7f), Color.Transparent, imageShade.copy(alpha = 0.8f)))
     Box(
         Modifier
             .fillMaxSize()
             .focusProperties { canFocus = interactive }
-            .background(Brush.verticalGradient(listOf(Color.Black.copy(alpha = 0.7f), Color.Transparent, Color.Black.copy(alpha = 0.8f))))
+            .background(shade)
             .symmetricSafeDrawingPadding()
             .padding(horizontal = SintoniaTheme.spacing.gutter, vertical = SintoniaTheme.spacing.sm),
     ) {
@@ -296,11 +298,11 @@ private fun TopBar(state: PlayerUiState, actions: PlayerActions, modifier: Modif
                     .size(
                         SintoniaTheme.sizes.avatarSmall,
                     ).clip(CircleShape)
-                    .border(SintoniaTheme.strokes.hairline, Color.White.copy(alpha = 0.2f), CircleShape),
+                    .border(SintoniaTheme.strokes.hairline, SintoniaTheme.colors.onImageBorder, CircleShape),
             )
         }
         Column(Modifier.weight(1f)) {
-            SText(state.session?.title.orEmpty(), style = SintoniaTheme.typography.subheading, color = Color.White, maxLines = 1)
+            SText(state.session?.title.orEmpty(), style = SintoniaTheme.typography.subheading, color = SintoniaTheme.colors.onImage, maxLines = 1)
             state.session?.let { session ->
                 val episodeText = if (session.kind == PlaybackKind.Episode && session.season != null && session.episode != null) {
                     stringResource(R.string.player_episode_subtitle, session.season, session.episode, session.subtitle.orEmpty())
@@ -308,7 +310,7 @@ private fun TopBar(state: PlayerUiState, actions: PlayerActions, modifier: Modif
                     session.subtitle
                 }
                 episodeText?.let {
-                    SText(it, style = SintoniaTheme.typography.caption, color = Color.White.copy(alpha = 0.7f), maxLines = 1)
+                    SText(it, style = SintoniaTheme.typography.caption, color = SintoniaTheme.colors.onImageMuted, maxLines = 1)
                 }
             }
         }
@@ -370,13 +372,13 @@ private fun PlayerIconButton(icon: Int, description: String, onClick: () -> Unit
         Modifier
             .size(SintoniaTheme.heights.minTouch)
             .sintoniaClickable(onClick = onClick, cornerRadius = SintoniaTheme.radii.control)
-            .then(if (bordered) Modifier.border(SintoniaTheme.strokes.hairline, Color.White.copy(alpha = 0.3f), shape) else Modifier),
+            .then(if (bordered) Modifier.border(SintoniaTheme.strokes.hairline, SintoniaTheme.colors.onImageBorder, shape) else Modifier),
         contentAlignment = Alignment.Center,
     ) {
         SIcon(
             icon = icon,
             contentDescription = description,
-            tint = Color.White,
+            tint = SintoniaTheme.colors.onImage,
             size = SintoniaTheme.sizes.iconMedium,
             modifier = if (flip) Modifier.graphicsLayer { scaleX = -1f } else Modifier,
         )
@@ -392,8 +394,8 @@ private fun BottomInfo(state: PlayerUiState, position: State<Long>, actions: Pla
         Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.xs)) {
             SSeekBar(positionMs = { position.value }, durationMs = duration, onSeek = actions.onSeekTo)
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                SText(formatDuration(position.value), style = SintoniaTheme.typography.mono, color = Color.White)
-                SText(formatDuration(duration), style = SintoniaTheme.typography.mono, color = Color.White.copy(alpha = 0.7f))
+                SText(formatDuration(position.value), style = SintoniaTheme.typography.mono, color = SintoniaTheme.colors.onImage)
+                SText(formatDuration(duration), style = SintoniaTheme.typography.mono, color = SintoniaTheme.colors.onImageMuted)
             }
         }
     }
@@ -406,32 +408,42 @@ private fun LiveBottom(state: PlayerUiState, modifier: Modifier) {
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.sm)) {
         if (now != null) {
             Row(horizontalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.md), verticalAlignment = Alignment.CenterVertically) {
-                SText(stringResource(R.string.program_now).uppercase(), style = SintoniaTheme.typography.monoLabel, color = Color.White.copy(alpha = 0.7f))
-                SText(now.title, style = SintoniaTheme.typography.bodyStrong, color = Color.White, maxLines = 1, modifier = Modifier.weight(1f))
+                SText(
+                    stringResource(R.string.program_now).uppercase(),
+                    style = SintoniaTheme.typography.monoLabel,
+                    color = SintoniaTheme.colors.onImageMuted,
+                )
+                SText(
+                    now.title,
+                    style = SintoniaTheme.typography.bodyStrong,
+                    color = SintoniaTheme.colors.onImage,
+                    maxLines = 1,
+                    modifier = Modifier.weight(1f),
+                )
                 SText(
                     remember(now.startMillis, now.stopMillis) { "${formatClock(now.startMillis)} – ${formatClock(now.stopMillis)}" },
                     style = SintoniaTheme.typography.mono,
-                    color = Color.White.copy(alpha = 0.7f),
+                    color = SintoniaTheme.colors.onImageMuted,
                 )
             }
             SProgressBar(progress = { now.progressAt(System.currentTimeMillis()) }, height = SintoniaTheme.sizes.progressThin, onImage = true)
         } else {
-            SText(stringResource(R.string.program_unknown), style = SintoniaTheme.typography.caption, color = Color.White.copy(alpha = 0.7f))
+            SText(stringResource(R.string.program_unknown), style = SintoniaTheme.typography.caption, color = SintoniaTheme.colors.onImageMuted)
         }
         if (next != null) {
             Row(horizontalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.md)) {
-                SText(stringResource(R.string.program_next).uppercase(), style = SintoniaTheme.typography.monoLabel, color = Color.White.copy(alpha = 0.7f))
+                SText(stringResource(R.string.program_next).uppercase(), style = SintoniaTheme.typography.monoLabel, color = SintoniaTheme.colors.onImageMuted)
                 SText(
                     next.title,
                     style = SintoniaTheme.typography.caption,
-                    color = Color.White.copy(alpha = 0.7f),
+                    color = SintoniaTheme.colors.onImageMuted,
                     maxLines = 1,
                     modifier = Modifier.weight(1f),
                 )
                 SText(
                     remember(next.startMillis) { formatClock(next.startMillis) },
                     style = SintoniaTheme.typography.mono,
-                    color = Color.White.copy(alpha = 0.7f),
+                    color = SintoniaTheme.colors.onImageMuted,
                 )
             }
         }
@@ -442,12 +454,17 @@ private fun LiveBottom(state: PlayerUiState, modifier: Modifier) {
 @Suppress("ModifierParameter") // the received modifier belongs to the retry button, not the root
 private fun ErrorOverlay(error: PlaybackErrorKind?, onRetry: () -> Unit, onBack: () -> Unit, retryModifier: Modifier = Modifier) {
     Column(
-        Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.75f)).padding(SintoniaTheme.spacing.xxxl),
+        Modifier.fillMaxSize().background(SintoniaTheme.colors.imageOverlay).padding(SintoniaTheme.spacing.xxxl),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.md, Alignment.CenterVertically),
     ) {
         SIcon(SIcons.AlertCircle, null, tint = SintoniaTheme.colors.danger, size = SintoniaTheme.sizes.iconHero)
-        SText(stringResource(R.string.player_error_title), style = SintoniaTheme.typography.subheading, color = Color.White, textAlign = TextAlign.Center)
+        SText(
+            stringResource(R.string.player_error_title),
+            style = SintoniaTheme.typography.subheading,
+            color = SintoniaTheme.colors.onImage,
+            textAlign = TextAlign.Center,
+        )
         SText(
             stringResource(
                 when (error) {
@@ -457,7 +474,7 @@ private fun ErrorOverlay(error: PlaybackErrorKind?, onRetry: () -> Unit, onBack:
                     else -> R.string.player_error_unknown
                 },
             ),
-            color = Color.White.copy(alpha = 0.7f),
+            color = SintoniaTheme.colors.onImageMuted,
             textAlign = TextAlign.Center,
         )
         Row(horizontalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.sm), modifier = Modifier.padding(top = SintoniaTheme.spacing.sm)) {

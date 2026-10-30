@@ -15,9 +15,9 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
 @Composable
 fun SSeekBar(
@@ -27,8 +27,8 @@ fun SSeekBar(
     modifier: Modifier = Modifier,
 ) {
     var dragFraction by remember { mutableFloatStateOf(-1f) }
-    val fill = Color.White
-    val track = Color.White.copy(alpha = 0.25f)
+    val fill = SintoniaTheme.colors.onImage
+    val track = SintoniaTheme.colors.onImageTrack
     Box(
         modifier = modifier
             .fillMaxWidth()

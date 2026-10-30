@@ -135,14 +135,14 @@ private fun FeaturedCard(item: FeaturedItem, onClick: () -> Unit, modifier: Modi
             .sintoniaClickable(onClick = onClick, cornerRadius = SintoniaTheme.radii.card),
     ) {
         SImage(item.imageUrl, null, Modifier.matchParentSize())
-        Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black.copy(alpha = 0.85f)))))
+        Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color.Transparent, SintoniaTheme.colors.imageShade.copy(alpha = 0.85f)))))
         Column(
             Modifier.align(Alignment.BottomStart).padding(SintoniaTheme.spacing.lg),
             verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.sm),
         ) {
-            SText(stringResource(R.string.home_featured).uppercase(), style = SintoniaTheme.typography.monoLabel, color = Color.White.copy(alpha = 0.7f))
-            SText(item.title, style = SintoniaTheme.typography.heading, color = Color.White, maxLines = 2)
-            item.meta?.let { SText(it, style = SintoniaTheme.typography.mono, color = Color.White.copy(alpha = 0.7f)) }
+            SText(stringResource(R.string.home_featured).uppercase(), style = SintoniaTheme.typography.monoLabel, color = SintoniaTheme.colors.onImageMuted)
+            SText(item.title, style = SintoniaTheme.typography.heading, color = SintoniaTheme.colors.onImage, maxLines = 2)
+            item.meta?.let { SText(it, style = SintoniaTheme.typography.mono, color = SintoniaTheme.colors.onImageMuted) }
             SButton(
                 stringResource(R.string.detail_watch),
                 onClick,

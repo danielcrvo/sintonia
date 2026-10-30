@@ -12,7 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
@@ -29,7 +28,7 @@ fun SBadge(
     val shape = RoundedCornerShape(SintoniaTheme.radii.pill)
     val (background, border, content) = when (style) {
         BadgeStyle.Neutral -> Triple(colors.surfaceAlt, colors.border, colors.textSecondary)
-        BadgeStyle.OnImage -> Triple(Color.Black.copy(alpha = 0.6f), Color.White.copy(alpha = 0.14f), Color.White)
+        BadgeStyle.OnImage -> Triple(SintoniaTheme.colors.imageDim, SintoniaTheme.colors.onImageHairline, SintoniaTheme.colors.onImage)
     }
     Box(
         modifier = modifier

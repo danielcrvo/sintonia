@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
@@ -21,8 +20,8 @@ fun SProgressBar(
     onImage: Boolean = false,
 ) {
     val colors = SintoniaTheme.colors
-    val track = if (onImage) Color.White.copy(alpha = 0.25f) else colors.track
-    val fill = if (onImage) Color.White else colors.text
+    val track = if (onImage) SintoniaTheme.colors.onImageTrack else colors.track
+    val fill = if (onImage) SintoniaTheme.colors.onImage else colors.text
     Box(
         modifier = modifier
             .fillMaxWidth()
