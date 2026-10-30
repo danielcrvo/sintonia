@@ -14,6 +14,7 @@ data class Spacing(
     val xxl: Dp = 24.dp,
     val xxxl: Dp = 32.dp,
     val gutter: Dp = 20.dp,
+    val safeVertical: Dp = 0.dp,
 )
 
 @Immutable
@@ -68,6 +69,7 @@ data class Sizes(
     val avatarLarge: Dp = 64.dp,
     val thumbTallHeight: Dp = 56.dp,
     val contentMaxWidth: Dp = 480.dp,
+    val splitMaxWidth: Dp = 880.dp,
     val padMaxWidth: Dp = 320.dp,
     val sidePanelWidth: Dp = 320.dp,
     val nextEpisodeCardWidth: Dp = 280.dp,
@@ -98,3 +100,6 @@ val TvHeights = Heights(
 )
 
 val SpacingTvGutter = 40.dp
+
+// About 5% of a 540dp TV viewport, so content stays clear of the overscan edge.
+val SpacingTvSafeVertical = 27.dp

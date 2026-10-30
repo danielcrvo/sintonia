@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -38,8 +37,10 @@ import com.danielcrvo.sintonia.core.designsystem.components.SIcons
 import com.danielcrvo.sintonia.core.designsystem.components.SLogo
 import com.danielcrvo.sintonia.core.designsystem.components.SProgressBar
 import com.danielcrvo.sintonia.core.designsystem.components.SSpinner
+import com.danielcrvo.sintonia.core.designsystem.components.SSplitPane
 import com.danielcrvo.sintonia.core.designsystem.components.SText
 import com.danielcrvo.sintonia.core.designsystem.components.initialFocusOnTv
+import com.danielcrvo.sintonia.core.designsystem.components.tvSafeArea
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import com.danielcrvo.sintonia.core.network.ApiException
 
@@ -60,42 +61,41 @@ fun ImportScreen(
             .background(colors.background)
             .statusBarsPadding()
             .navigationBarsPadding()
+            .tvSafeArea()
             .padding(horizontal = spacing.gutter, vertical = spacing.xxl),
         contentAlignment = Alignment.Center,
     ) {
-        // Scrolls when it does not fit (TV has little height) so the button stays reachable by focus.
-        Column(
-            modifier = Modifier
-                .widthIn(max = SintoniaTheme.sizes.contentMaxWidth)
-                .fillMaxWidth()
-                .verticalScroll(scroll),
-            verticalArrangement = Arrangement.spacedBy(spacing.xl),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            SLogo(size = SintoniaTheme.sizes.logoLarge)
-            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(spacing.sm)) {
-                SText(stringResource(R.string.loading_title), style = SintoniaTheme.typography.heading, textAlign = TextAlign.Center)
+        // Scrolls only as a fallback for large font scales; on TV the two panes fit the viewport.
+        SSplitPane(
+            modifier = Modifier.verticalScroll(scroll),
+            start = {
+                SLogo(size = SintoniaTheme.sizes.logoLarge)
+                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(spacing.sm)) {
+                    SText(stringResource(R.string.loading_title), style = SintoniaTheme.typography.heading, textAlign = TextAlign.Center)
+                    SText(
+                        stringResource(R.string.loading_subtitle),
+                        style = SintoniaTheme.typography.body,
+                        color = colors.textSecondary,
+                        textAlign = TextAlign.Center,
+                    )
+                }
                 SText(
-                    stringResource(R.string.loading_subtitle),
-                    style = SintoniaTheme.typography.body,
-                    color = colors.textSecondary,
-                    textAlign = TextAlign.Center,
+                    stringResource(R.string.loading_percent, state.progress.percent),
+                    style = SintoniaTheme.typography.display.copy(fontFamily = SintoniaTheme.typography.mono.fontFamily),
                 )
-            }
-            SText(
-                stringResource(R.string.loading_percent, state.progress.percent),
-                style = SintoniaTheme.typography.display.copy(fontFamily = SintoniaTheme.typography.mono.fontFamily),
-            )
-            SProgressBar(progress = { state.progress.percent / 100f }, height = SintoniaTheme.sizes.progressRegular)
-            StepsCard(state.progress)
-            SButton(
-                text = stringResource(R.string.loading_cancel),
-                onClick = onCancel,
-                modifier = Modifier.fillMaxWidth().initialFocusOnTv(),
-                variant = ButtonVariant.Secondary,
-                size = ButtonSize.Footer,
-            )
-        }
+                SProgressBar(progress = { state.progress.percent / 100f }, height = SintoniaTheme.sizes.progressRegular)
+            },
+            end = {
+                StepsCard(state.progress)
+                SButton(
+                    text = stringResource(R.string.loading_cancel),
+                    onClick = onCancel,
+                    modifier = Modifier.fillMaxWidth().initialFocusOnTv(),
+                    variant = ButtonVariant.Secondary,
+                    size = ButtonSize.Footer,
+                )
+            },
+        )
     }
 
     val failure = state.failure

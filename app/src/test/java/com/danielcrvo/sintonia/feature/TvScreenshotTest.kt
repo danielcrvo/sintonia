@@ -5,10 +5,16 @@ import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithText
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.test.core.app.ApplicationProvider
+import com.danielcrvo.sintonia.R
+import com.danielcrvo.sintonia.core.data.importing.ImportProgress
+import com.danielcrvo.sintonia.core.data.importing.ImportStep
+import com.danielcrvo.sintonia.core.data.importing.StepStatus
 import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import com.danielcrvo.sintonia.core.designsystem.theme.ThemeMode
@@ -24,6 +30,8 @@ import com.danielcrvo.sintonia.core.model.Series
 import com.danielcrvo.sintonia.core.model.SeriesInfo
 import com.danielcrvo.sintonia.core.model.VodInfo
 import com.danielcrvo.sintonia.core.model.WatchProgress
+import com.danielcrvo.sintonia.feature.lists.ui.importing.ImportScreen
+import com.danielcrvo.sintonia.feature.lists.ui.importing.ImportUiState
 import com.danielcrvo.sintonia.feature.live.ui.LiveScreen
 import com.danielcrvo.sintonia.feature.live.ui.LiveUiState
 import com.danielcrvo.sintonia.feature.movies.ui.InfoState
@@ -114,12 +122,38 @@ class TvScreenshotTest {
         rule.saveScreenshot("tv-live-guide-light")
     }
 
-    private fun tvShot(name: String, content: @androidx.compose.runtime.Composable () -> Unit) {
+    private fun tvShot(
+        name: String,
+        verify: () -> Unit = {},
+        content: @androidx.compose.runtime.Composable () -> Unit,
+    ) {
         val mode = mutableStateOf(ThemeMode.Dark)
         rule.setContent { SintoniaTheme(mode = mode.value, deviceClass = DeviceClass.Tv) { content() } }
+        verify()
         rule.saveScreenshot("$name-dark")
         mode.value = ThemeMode.Light
         rule.saveScreenshot("$name-light")
+    }
+
+    @Test
+    fun importing() = tvShot(
+        "tv-import-running",
+        verify = {
+            rule.onNodeWithText(rule.activity.getString(R.string.loading_title)).assertIsDisplayed()
+            rule.onNodeWithText(rule.activity.getString(R.string.loading_cancel)).assertIsDisplayed()
+        },
+    ) {
+        ImportScreen(
+            ImportUiState(
+                progress = ImportProgress()
+                    .update(ImportStep.Connect, StepStatus.Done)
+                    .update(ImportStep.Live, StepStatus.Done, count = 1240)
+                    .update(ImportStep.Movies, StepStatus.Running, count = 5300, fraction = 0.45f),
+            ),
+            onCancel = {},
+            onRetry = {},
+            onEditDetails = {},
+        )
     }
 
     private val movie = Movie(1, "m1", "Horizonte Perdido", null, "aventura", "2026", 7.8, "mp4", null)
