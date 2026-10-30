@@ -193,6 +193,17 @@ private fun errorMessage(kind: ApiException.Kind): Int = when (kind) {
 }
 
 private fun errorCode(failure: ImportFailure): String = buildList {
-    add(failure.httpCode?.let { "HTTP $it" } ?: failure.kind.name.uppercase())
+    add(failure.httpCode?.let { "HTTP $it" } ?: kindCode(failure.kind))
     failure.host?.let { add(it) }
 }.joinToString(" · ")
+
+private fun kindCode(kind: ApiException.Kind): String = when (kind) {
+    ApiException.Kind.Network -> "NETWORK"
+    ApiException.Kind.Timeout -> "TIMEOUT"
+    ApiException.Kind.Ssl -> "SSL"
+    ApiException.Kind.Auth -> "AUTH"
+    ApiException.Kind.Http -> "HTTP"
+    ApiException.Kind.Invalid -> "INVALID"
+    ApiException.Kind.Empty -> "EMPTY"
+    ApiException.Kind.File -> "FILE"
+}
