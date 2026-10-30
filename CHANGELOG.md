@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - On Android TV, the not found screens and the player error no longer show a Back button. The remote's Back key already leaves them.
 - On Android TV, the featured card on Home is a single focus stop instead of two overlapping ones.
 - On Android TV, the automatic update row in Settings takes one press of OK instead of two focus stops.
+- On Android TV, the My lists screen starts on the active list instead of the Add button, and the remove dialog starts on Cancel.
 
 ## [1.0.0] - 2026-10-28
 

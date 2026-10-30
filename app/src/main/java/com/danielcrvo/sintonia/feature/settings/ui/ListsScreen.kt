@@ -54,6 +54,7 @@ fun ListsScreen(
     val colors = SintoniaTheme.colors
     val spacing = SintoniaTheme.spacing
     val hairline = SintoniaTheme.strokes.hairline
+    val hasActive = state.lists.any { it.id == state.activeId }
     Column(modifier.fillMaxSize().background(colors.background).statusBarsPadding()) {
         SHeader(title = stringResource(R.string.lists_title), onBack = onBack)
         LazyColumn(
@@ -68,7 +69,7 @@ fun ListsScreen(
                     active = list.id == state.activeId,
                     onSelect = { onSelect(list) },
                     onRemove = { onRemoveRequest(list) },
-                    modifier = sintoniaItemMotion(),
+                    modifier = sintoniaItemMotion().then(if (list.id == state.activeId) Modifier.initialFocusOnTv() else Modifier),
                 )
             }
         }
@@ -79,7 +80,13 @@ fun ListsScreen(
                 .navigationBarsPadding()
                 .padding(spacing.lg),
         ) {
-            SButton(stringResource(R.string.lists_add), onAdd, Modifier.fillMaxWidth().initialFocusOnTv(), size = ButtonSize.Footer, leadingIcon = SIcons.Add)
+            SButton(
+                stringResource(R.string.lists_add),
+                onAdd,
+                Modifier.fillMaxWidth().then(if (hasActive) Modifier else Modifier.initialFocusOnTv()),
+                size = ButtonSize.Footer,
+                leadingIcon = SIcons.Add,
+            )
         }
     }
 
@@ -88,7 +95,7 @@ fun ListsScreen(
         if (pending != null) {
             SText(stringResource(R.string.lists_remove_message, pending.name), color = colors.textSecondary)
             Row(Modifier.fillMaxWidth().padding(top = spacing.md), horizontalArrangement = Arrangement.spacedBy(spacing.sm)) {
-                SButton(stringResource(R.string.action_cancel), onRemoveCancel, Modifier.weight(1f), variant = ButtonVariant.Secondary)
+                SButton(stringResource(R.string.action_cancel), onRemoveCancel, Modifier.weight(1f).initialFocusOnTv(), variant = ButtonVariant.Secondary)
                 SButton(stringResource(R.string.lists_remove), onRemoveConfirm, Modifier.weight(1f), variant = ButtonVariant.Destructive)
             }
         }
