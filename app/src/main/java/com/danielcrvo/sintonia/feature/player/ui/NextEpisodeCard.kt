@@ -41,7 +41,7 @@ fun NextEpisodeCard(
             color = colors.textMuted,
         )
         SText(
-            "T${upNext.episode.season} · E${upNext.episode.number}",
+            stringResource(R.string.episode_code, upNext.episode.season, upNext.episode.number),
             style = SintoniaTheme.typography.mono,
             color = colors.textSecondary,
         )
