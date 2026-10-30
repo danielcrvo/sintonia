@@ -149,6 +149,6 @@ private fun PlayBlock(progress: WatchProgress?, onPlay: () -> Unit) {
 private fun FailedInfo(onRetry: () -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.sm)) {
         SText(stringResource(R.string.detail_load_error), style = SintoniaTheme.typography.caption, color = SintoniaTheme.colors.textSecondary)
-        SButton(stringResource(R.string.error_retry), onRetry, variant = ButtonVariant.Secondary, size = ButtonSize.Compact)
+        SButton(stringResource(R.string.error_retry), onRetry, Modifier.initialFocusOnTv(), variant = ButtonVariant.Secondary, size = ButtonSize.Compact)
     }
 }

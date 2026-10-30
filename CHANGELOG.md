@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - On Android TV, pressing Back in the player while the controls are visible hides them first, and a second press leaves the player.
 - The language picker writes Portuguese as Português (Brasil) in every app language, like the other language names.
 - The size of a picked list file follows the device formatting and language.
+- On Android TV, the Retry button on the movie and series details starts focused when the details fail to load.
 
 ## [1.0.0] - 2026-10-28
 

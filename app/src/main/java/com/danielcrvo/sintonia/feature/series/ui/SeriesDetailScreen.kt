@@ -167,7 +167,13 @@ private fun SeriesInfo(
         SeriesInfoState.Loading -> SSpinner(size = SintoniaTheme.sizes.spinnerInline)
         SeriesInfoState.Failed -> Column(verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.sm)) {
             SText(stringResource(R.string.detail_load_error), style = SintoniaTheme.typography.caption, color = colors.textSecondary)
-            SButton(stringResource(R.string.error_retry), onRetryInfo, variant = ButtonVariant.Secondary, size = ButtonSize.Compact)
+            SButton(
+                stringResource(R.string.error_retry),
+                onRetryInfo,
+                Modifier.initialFocusOnTv(),
+                variant = ButtonVariant.Secondary,
+                size = ButtonSize.Compact,
+            )
         }
         else -> Unit
     }
