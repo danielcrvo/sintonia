@@ -1,5 +1,6 @@
 package com.danielcrvo.sintonia.feature.lists.ui.addlist
 
+import android.text.format.Formatter
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -41,7 +43,6 @@ import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import com.danielcrvo.sintonia.feature.lists.domain.FieldError
 import com.danielcrvo.sintonia.feature.lists.domain.FormField
-import java.util.Locale
 
 @Composable
 fun AddListScreen(
@@ -238,7 +239,7 @@ private fun FileCard(file: PickedFile?, onPick: () -> Unit, error: String?) {
                         SText(
                             text = stringResource(
                                 R.string.meta_two,
-                                formatBytes(file.sizeBytes),
+                                Formatter.formatShortFileSize(LocalContext.current, file.sizeBytes),
                                 pluralStringResource(R.plurals.addlist_file_items, file.itemCount, file.itemCount),
                             ),
                             style = SintoniaTheme.typography.mono,
@@ -267,10 +268,4 @@ private fun FileCard(file: PickedFile?, onPick: () -> Unit, error: String?) {
         }
         if (error != null) SText(error, style = SintoniaTheme.typography.caption, color = colors.danger)
     }
-}
-
-internal fun formatBytes(bytes: Long): String = when {
-    bytes >= 1_000_000 -> String.format(Locale.getDefault(), "%.1f MB", bytes / 1_000_000.0)
-    bytes >= 1_000 -> String.format(Locale.getDefault(), "%d KB", bytes / 1_000)
-    else -> "$bytes B"
 }
