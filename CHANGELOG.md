@@ -6,20 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- On Android TV, pressing Back in the player while the controls are showing hides them, and a second press leaves the player.
+
 ### Fixed
 
-- On Android TV, the screen shown while a list loads no longer gets cut off. It now uses two columns and keeps a margin from the screen edge.
-- On Android TV, the welcome and add list screens also keep a margin from the top and bottom edges.
-- The next episode card in the player now shows the season and episode code in the app language, so English shows S1 · E5 instead of T1 · E5.
-- On Android TV, the not found screens and the player error no longer show a Back button. The remote's Back key already leaves them.
-- On Android TV, the featured card on Home is a single focus stop instead of two overlapping ones.
-- On Android TV, the automatic update row in Settings takes one press of OK instead of two focus stops.
-- On Android TV, the My lists screen starts on the active list instead of the Add button, and the remove dialog starts on Cancel.
-- On Android TV, entering the category tabs puts focus on the selected tab instead of the first one.
-- On Android TV, pressing Back in the player while the controls are visible hides them first, and a second press leaves the player.
-- The language picker writes Portuguese as Português (Brasil) in every app language, like the other language names.
+- On Android TV, the screen shown while a list loads fits the screen. It uses two columns and keeps a margin from the screen edge.
+- On Android TV, the welcome and add list screens keep a margin from the top and bottom edges.
+- On Android TV, the featured card on Home and the automatic update row in Settings each have a single focus stop.
+- On Android TV, My lists starts on the active list, the remove dialog starts on Cancel, the category tabs start on the selected tab, and the Retry button on the movie and series details has focus when the details fail to load.
+- On Android TV, the not found screens and the player error have no Back button, because the Back key on the remote already leaves them.
+- The next episode card in the player shows the season and episode code in the app language, such as S1 · E5 in English.
+- The language picker shows Portuguese as Português (Brasil) in every app language.
 - The size of a picked list file follows the device formatting and language.
-- On Android TV, the Retry button on the movie and series details starts focused when the details fail to load.
 
 ## [1.0.0] - 2026-10-28
 
