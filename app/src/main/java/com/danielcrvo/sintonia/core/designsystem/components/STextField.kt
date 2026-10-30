@@ -26,18 +26,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEvent
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.danielcrvo.sintonia.R
+import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
 @Composable
@@ -74,6 +84,7 @@ fun STextField(
     val halo = SintoniaTheme.strokes.focusOffset
     val focusManager = LocalFocusManager.current
     val keyboard = LocalSoftwareKeyboardController.current
+    val tv = SintoniaTheme.deviceClass == DeviceClass.Tv
     val textStyle = SintoniaTheme.typography.body.copy(color = colors.text)
 
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.snug)) {
@@ -106,6 +117,9 @@ fun STextField(
             ),
             modifier = Modifier
                 .fillMaxWidth()
+                // On TV the keyboard opens with OK, so the D-pad keeps moving between fields.
+                .onFocusChanged { if (tv && it.isFocused) keyboard?.hide() }
+                .onPreviewKeyEvent { event -> tv && handleTvKey(event, singleLine, keyboard, focusManager) }
                 .drawBehind {
                     if (focused) {
                         val h = halo.toPx()
@@ -158,5 +172,23 @@ fun STextField(
         if (error != null) {
             SText(error, style = SintoniaTheme.typography.caption, color = colors.danger)
         }
+    }
+}
+
+private fun handleTvKey(
+    event: KeyEvent,
+    singleLine: Boolean,
+    keyboard: SoftwareKeyboardController?,
+    focusManager: FocusManager,
+): Boolean {
+    if (event.type != KeyEventType.KeyDown) return false
+    return when (event.key) {
+        Key.DirectionCenter, Key.Enter, Key.NumPadEnter -> {
+            keyboard?.show()
+            true
+        }
+        Key.DirectionDown -> singleLine && focusManager.moveFocus(FocusDirection.Down)
+        Key.DirectionUp -> singleLine && focusManager.moveFocus(FocusDirection.Up)
+        else -> false
     }
 }
