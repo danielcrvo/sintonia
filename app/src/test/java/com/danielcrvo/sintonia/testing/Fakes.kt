@@ -43,7 +43,12 @@ class FakeLists(vararg initial: IptvList) : ListsRepository {
     override suspend fun create(list: NewList): Long = error("not used")
     override suspend fun setActive(id: Long) = Unit
     override suspend fun rename(id: Long, name: String) = Unit
-    override suspend fun remove(id: Long): RemoveResult = error("not used")
+    val removed = ArrayList<Long>()
+
+    override suspend fun remove(id: Long): RemoveResult {
+        removed += id
+        return RemoveResult.Unchanged
+    }
 }
 
 fun sampleList(

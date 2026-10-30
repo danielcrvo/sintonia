@@ -53,6 +53,7 @@ class ImportViewModel
         private var listId: Long? = null
         private var discardOnExit = false
         private var job: Job? = null
+        private var leaving = false
 
         /** Starts once per list; repeated calls (recomposition, rotation) do not restart it. */
         fun start(listId: Long, discardOnExit: Boolean) {
@@ -63,11 +64,14 @@ class ImportViewModel
         }
 
         fun retry() {
+            leaving = false
             _state.update { ImportUiState() }
             run()
         }
 
         fun cancel() {
+            if (leaving) return
+            leaving = true
             job?.cancel()
             viewModelScope.launch {
                 discardIfNew()
@@ -76,6 +80,8 @@ class ImportViewModel
         }
 
         fun editDetails() {
+            if (leaving) return
+            leaving = true
             viewModelScope.launch {
                 discardIfNew()
                 _effects.send(ImportEffect.EditDetails)
