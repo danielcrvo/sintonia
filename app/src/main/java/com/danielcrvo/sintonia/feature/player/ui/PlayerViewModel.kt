@@ -410,7 +410,7 @@ class PlayerViewModel
             scheduleHide()
         }
 
-        private fun hideControls() {
+        fun hideControls() {
             hideJob?.cancel()
             local.update { it.copy(controlsVisible = false) }
         }

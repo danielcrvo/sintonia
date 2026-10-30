@@ -81,6 +81,7 @@ fun PlayerRoute(
         when {
             state.panel != null -> viewModel.onClosePanel()
             state.upNext != null -> viewModel.onCancelNext()
+            deviceClass == DeviceClass.Tv && state.controlsVisible -> viewModel.hideControls()
             else -> close()
         }
     }
