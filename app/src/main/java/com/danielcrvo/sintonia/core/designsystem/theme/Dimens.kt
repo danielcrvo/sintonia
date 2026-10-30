@@ -16,6 +16,7 @@ data class Spacing(
     val snug: Dp = 6.dp,
     val cozy: Dp = 10.dp,
     val gutter: Dp = 20.dp,
+    val footer: Dp = 16.dp,
     val safeVertical: Dp = 0.dp,
 )
 

@@ -78,7 +78,7 @@ fun ListsScreen(
                 .fillMaxWidth()
                 .drawBehind { drawRect(colors.border, Offset.Zero, Size(size.width, hairline.toPx())) }
                 .navigationBarsPadding()
-                .padding(spacing.lg),
+                .padding(horizontal = spacing.footer, vertical = spacing.lg),
         ) {
             SButton(
                 stringResource(R.string.lists_add),

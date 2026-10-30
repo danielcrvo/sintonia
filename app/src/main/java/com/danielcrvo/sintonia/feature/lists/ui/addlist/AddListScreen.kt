@@ -158,7 +158,7 @@ fun AddListScreen(
                     drawRect(colors.border, Offset.Zero, Size(size.width, hairline.toPx()))
                 }.navigationBarsPadding()
                 .imePadding()
-                .padding(spacing.lg),
+                .padding(horizontal = spacing.footer, vertical = spacing.lg),
         ) {
             SButton(
                 text = stringResource(R.string.addlist_connect),
