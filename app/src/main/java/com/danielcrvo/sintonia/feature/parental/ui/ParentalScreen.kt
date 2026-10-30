@@ -27,6 +27,7 @@ import com.danielcrvo.sintonia.core.designsystem.components.SSectionLabel
 import com.danielcrvo.sintonia.core.designsystem.components.SSettingsRow
 import com.danielcrvo.sintonia.core.designsystem.components.SSwitch
 import com.danielcrvo.sintonia.core.designsystem.components.SText
+import com.danielcrvo.sintonia.core.designsystem.components.tvSafeArea
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import com.danielcrvo.sintonia.core.model.ContentKind
 
@@ -42,7 +43,13 @@ fun ParentalScreen(
 ) {
     val colors = SintoniaTheme.colors
     val spacing = SintoniaTheme.spacing
-    Column(modifier.fillMaxSize().background(colors.background).statusBarsPadding()) {
+    Column(
+        modifier
+            .fillMaxSize()
+            .background(colors.background)
+            .statusBarsPadding()
+            .tvSafeArea(),
+    ) {
         SHeader(title = stringResource(R.string.parental_title), onBack = onBack)
         if (!state.unlocked) return@Column
         LazyColumn(

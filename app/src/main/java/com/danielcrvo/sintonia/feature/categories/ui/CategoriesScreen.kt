@@ -33,6 +33,7 @@ import com.danielcrvo.sintonia.core.designsystem.components.SText
 import com.danielcrvo.sintonia.core.designsystem.components.STextField
 import com.danielcrvo.sintonia.core.designsystem.components.initialFocusOnTv
 import com.danielcrvo.sintonia.core.designsystem.components.sintoniaItemMotion
+import com.danielcrvo.sintonia.core.designsystem.components.tvSafeArea
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import com.danielcrvo.sintonia.core.model.ContentKind
 
@@ -51,7 +52,13 @@ fun CategoriesScreen(
 ) {
     val colors = SintoniaTheme.colors
     val spacing = SintoniaTheme.spacing
-    Column(modifier.fillMaxSize().background(colors.background).statusBarsPadding()) {
+    Column(
+        modifier
+            .fillMaxSize()
+            .background(colors.background)
+            .statusBarsPadding()
+            .tvSafeArea(),
+    ) {
         SHeader(title = stringResource(R.string.categories_title), onBack = onBack)
         LazyColumn(
             Modifier.weight(1f).navigationBarsPadding().focusRestorer(),

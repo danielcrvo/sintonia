@@ -39,6 +39,7 @@ import com.danielcrvo.sintonia.core.designsystem.components.SSwitch
 import com.danielcrvo.sintonia.core.designsystem.components.SText
 import com.danielcrvo.sintonia.core.designsystem.components.SThemeSwitch
 import com.danielcrvo.sintonia.core.designsystem.components.initialFocusOnTv
+import com.danielcrvo.sintonia.core.designsystem.components.tvSafeArea
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import com.danielcrvo.sintonia.core.designsystem.theme.ThemeMode
 import com.danielcrvo.sintonia.core.model.IptvList
@@ -60,7 +61,13 @@ fun SettingsScreen(
 ) {
     val colors = SintoniaTheme.colors
     val spacing = SintoniaTheme.spacing
-    Column(modifier.fillMaxSize().background(colors.background).statusBarsPadding()) {
+    Column(
+        modifier
+            .fillMaxSize()
+            .background(colors.background)
+            .statusBarsPadding()
+            .tvSafeArea(),
+    ) {
         SHeader(title = stringResource(R.string.settings_title), onBack = onBack)
         Column(
             Modifier

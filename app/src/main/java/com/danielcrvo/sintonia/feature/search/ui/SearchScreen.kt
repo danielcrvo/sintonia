@@ -36,6 +36,7 @@ import com.danielcrvo.sintonia.core.designsystem.components.SText
 import com.danielcrvo.sintonia.core.designsystem.components.STextField
 import com.danielcrvo.sintonia.core.designsystem.components.sintoniaClickable
 import com.danielcrvo.sintonia.core.designsystem.components.sintoniaItemMotion
+import com.danielcrvo.sintonia.core.designsystem.components.tvSafeArea
 import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import com.danielcrvo.sintonia.core.model.Channel
@@ -60,7 +61,13 @@ fun SearchScreen(
     val tv = SintoniaTheme.deviceClass == DeviceClass.Tv
     LaunchedEffect(Unit) { if (!tv) runCatching { focus.requestFocus() } }
 
-    Column(modifier.fillMaxSize().background(colors.background).statusBarsPadding()) {
+    Column(
+        modifier
+            .fillMaxSize()
+            .background(colors.background)
+            .statusBarsPadding()
+            .tvSafeArea(),
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = spacing.gutter, vertical = spacing.md),
             verticalAlignment = Alignment.CenterVertically,

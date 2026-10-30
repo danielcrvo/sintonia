@@ -37,6 +37,7 @@ import com.danielcrvo.sintonia.core.designsystem.components.SText
 import com.danielcrvo.sintonia.core.designsystem.components.initialFocusOnTv
 import com.danielcrvo.sintonia.core.designsystem.components.sintoniaClickable
 import com.danielcrvo.sintonia.core.designsystem.components.sintoniaItemMotion
+import com.danielcrvo.sintonia.core.designsystem.components.tvSafeArea
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import com.danielcrvo.sintonia.core.model.IptvList
 
@@ -55,7 +56,13 @@ fun ListsScreen(
     val spacing = SintoniaTheme.spacing
     val hairline = SintoniaTheme.strokes.hairline
     val hasActive = state.lists.any { it.id == state.activeId }
-    Column(modifier.fillMaxSize().background(colors.background).statusBarsPadding()) {
+    Column(
+        modifier
+            .fillMaxSize()
+            .background(colors.background)
+            .statusBarsPadding()
+            .tvSafeArea(),
+    ) {
         SHeader(title = stringResource(R.string.lists_title), onBack = onBack)
         LazyColumn(
             Modifier.weight(1f).focusRestorer(),
