@@ -22,7 +22,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.R
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import com.danielcrvo.sintonia.core.designsystem.theme.ThemeMode
@@ -35,9 +34,9 @@ fun SSwitch(
     enabled: Boolean = true,
 ) {
     val colors = SintoniaTheme.colors
-    val width = 40.dp
-    val height = 24.dp
-    val thumb = 18.dp
+    val width = SintoniaTheme.sizes.switchWidth
+    val height = SintoniaTheme.sizes.switchHeight
+    val thumb = SintoniaTheme.sizes.switchThumb
     val inset = (height - thumb) / 2
     val position by animateFloatAsState(if (checked) 1f else 0f, SintoniaTheme.motion.fast(), label = "switchThumb")
     val trackColor by animateColorAsState(
@@ -89,13 +88,13 @@ fun SCheckbox(
     ) {
         Box(
             Modifier
-                .size(20.dp)
+                .size(SintoniaTheme.sizes.checkbox)
                 .clip(shape)
                 .background(if (checked) colors.primary else colors.surface)
                 .border(SintoniaTheme.strokes.hairline, if (checked) colors.primary else colors.borderStrong, shape),
             contentAlignment = Alignment.Center,
         ) {
-            if (checked) SIcon(SIcons.Check, contentDescription, tint = colors.onPrimary, size = 14.dp)
+            if (checked) SIcon(SIcons.Check, contentDescription, tint = colors.onPrimary, size = SintoniaTheme.sizes.iconCheck)
         }
     }
 }
@@ -105,11 +104,11 @@ fun SRadio(selected: Boolean, modifier: Modifier = Modifier) {
     val colors = SintoniaTheme.colors
     Box(
         modifier = modifier
-            .size(20.dp)
+            .size(SintoniaTheme.sizes.checkbox)
             .border(SintoniaTheme.strokes.hairline, if (selected) colors.text else colors.borderStrong, CircleShape),
         contentAlignment = Alignment.Center,
     ) {
-        if (selected) Box(Modifier.size(10.dp).background(colors.text, CircleShape))
+        if (selected) Box(Modifier.size(SintoniaTheme.sizes.radioDot).background(colors.text, CircleShape))
     }
 }
 
@@ -140,7 +139,7 @@ fun SThemeSwitch(
             )
             Box(
                 modifier = Modifier
-                    .size(width = 36.dp, height = 28.dp)
+                    .size(width = SintoniaTheme.sizes.themeSegmentWidth, height = SintoniaTheme.sizes.themeSegmentHeight)
                     .sintoniaClickable(
                         onClick = { onSelected(mode) },
                         cornerRadius = SintoniaTheme.radii.pill,
@@ -152,7 +151,7 @@ fun SThemeSwitch(
                     icon = iconAndLabel.first,
                     contentDescription = iconAndLabel.second,
                     tint = if (active) colors.text else colors.textMuted,
-                    size = 16.dp,
+                    size = SintoniaTheme.sizes.iconInline,
                 )
             }
         }

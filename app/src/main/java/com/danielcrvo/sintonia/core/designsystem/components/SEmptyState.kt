@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
 @Composable
@@ -37,12 +36,12 @@ fun SEmptyState(
     ) {
         Box(
             Modifier
-                .size(56.dp)
+                .size(SintoniaTheme.sizes.logoBadge)
                 .background(colors.surface, shape)
                 .border(SintoniaTheme.strokes.hairline, colors.border, shape),
             contentAlignment = Alignment.Center,
         ) {
-            SIcon(icon, contentDescription = null, tint = colors.textMuted, size = 24.dp)
+            SIcon(icon, contentDescription = null, tint = colors.textMuted, size = SintoniaTheme.sizes.iconMedium)
         }
         SText(title, style = SintoniaTheme.typography.subheading, textAlign = TextAlign.Center)
         if (message != null) {

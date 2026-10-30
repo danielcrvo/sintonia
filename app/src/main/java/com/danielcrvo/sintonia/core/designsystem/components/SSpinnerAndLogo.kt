@@ -25,7 +25,7 @@ import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 @Composable
 fun SSpinner(
     modifier: Modifier = Modifier,
-    size: Dp = 20.dp,
+    size: Dp = SintoniaTheme.sizes.spinnerInline,
     color: Color = SintoniaTheme.colors.text,
 ) {
     val reduced = SintoniaTheme.motion.isReduced
@@ -54,7 +54,7 @@ fun SSpinner(
 }
 
 @Composable
-fun SLogo(modifier: Modifier = Modifier, size: Dp = 32.dp) {
+fun SLogo(modifier: Modifier = Modifier, size: Dp = SintoniaTheme.sizes.logoMedium) {
     val line = SintoniaTheme.colors.text
     val brand = SintoniaTheme.colors.brand
     Canvas(modifier.size(size)) {

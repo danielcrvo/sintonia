@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
 @Composable
@@ -49,7 +48,7 @@ fun SDetailHero(
 
 @Composable
 fun SInfoRow(label: String, value: String, modifier: Modifier = Modifier) {
-    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(SintoniaTheme.sizes.tightGap)) {
         SText(label.uppercase(), style = SintoniaTheme.typography.monoLabel, color = SintoniaTheme.colors.textMuted)
         SText(value, style = SintoniaTheme.typography.body, color = SintoniaTheme.colors.textSecondary)
     }

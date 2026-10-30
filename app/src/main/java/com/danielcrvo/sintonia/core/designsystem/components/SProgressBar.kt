@@ -9,14 +9,13 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
 @Composable
 fun SProgressBar(
     progress: () -> Float,
     modifier: Modifier = Modifier,
-    height: Dp = 2.dp,
+    height: Dp = SintoniaTheme.sizes.progressHairline,
     onImage: Boolean = false,
 ) {
     val colors = SintoniaTheme.colors

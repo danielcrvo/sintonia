@@ -9,7 +9,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.R
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
@@ -59,7 +58,7 @@ fun SIcon(
     contentDescription: String?,
     modifier: Modifier = Modifier,
     tint: Color = SintoniaTheme.colors.text,
-    size: Dp = 20.dp,
+    size: Dp = SintoniaTheme.sizes.iconDefault,
 ) {
     Image(
         painter = painterResource(icon),

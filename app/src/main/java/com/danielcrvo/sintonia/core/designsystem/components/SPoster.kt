@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
@@ -36,7 +35,7 @@ fun SPoster(
     Column(
         modifier = modifier
             .sintoniaClickable(onClick = onClick, cornerRadius = radius, focusScale = if (tv) 1.04f else 1f),
-        verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.sm - 2.dp),
+        verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.snug),
     ) {
         Box(
             modifier = Modifier
@@ -52,7 +51,7 @@ fun SPoster(
             if (progress != null) {
                 SProgressBar(
                     progress = { progress },
-                    height = 3.dp,
+                    height = SintoniaTheme.sizes.progressThin,
                     onImage = true,
                     modifier = Modifier.align(Alignment.BottomStart),
                 )

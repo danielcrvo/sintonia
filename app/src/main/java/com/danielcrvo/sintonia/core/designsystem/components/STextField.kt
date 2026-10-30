@@ -37,7 +37,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.R
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
@@ -77,7 +76,7 @@ fun STextField(
     val keyboard = LocalSoftwareKeyboardController.current
     val textStyle = SintoniaTheme.typography.body.copy(color = colors.text)
 
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.sm - 2.dp)) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.snug)) {
         if (label != null) {
             SText(label, style = SintoniaTheme.typography.label, color = colors.textSecondary)
         }

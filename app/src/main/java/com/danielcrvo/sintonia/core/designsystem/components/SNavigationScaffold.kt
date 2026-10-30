@@ -29,7 +29,6 @@ import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
@@ -89,7 +88,7 @@ private fun BottomBar(items: List<NavItem>, selectedIndex: Int, onSelect: (Int) 
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.xs, Alignment.CenterVertically),
             ) {
-                SIcon(item.icon, contentDescription = null, tint = if (active) colors.text else colors.textMuted, size = 24.dp)
+                SIcon(item.icon, contentDescription = null, tint = if (active) colors.text else colors.textMuted, size = SintoniaTheme.sizes.iconMedium)
                 SText(item.label, style = SintoniaTheme.typography.monoSmall, color = if (active) colors.text else colors.textMuted, maxLines = 1)
             }
         }
@@ -114,13 +113,13 @@ private fun SideMenu(items: List<NavItem>, selectedIndex: Int, onSelect: (Int) -
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.sm),
     ) {
-        SLogo(size = 32.dp, modifier = Modifier.padding(bottom = SintoniaTheme.spacing.xl))
+        SLogo(size = SintoniaTheme.sizes.logoMedium, modifier = Modifier.padding(bottom = SintoniaTheme.spacing.xl))
         items.forEachIndexed { index, item ->
             val active = index == selectedIndex
             val shape = RoundedCornerShape(SintoniaTheme.radii.menuItem)
             Box(
                 modifier = Modifier
-                    .size(56.dp)
+                    .size(SintoniaTheme.sizes.menuItem)
                     .then(if (active) Modifier.focusRequester(selectedFocus) else Modifier)
                     .sintoniaClickable(onClick = { onSelect(index) }, cornerRadius = SintoniaTheme.radii.menuItem, role = Role.Tab)
                     .then(
@@ -134,7 +133,7 @@ private fun SideMenu(items: List<NavItem>, selectedIndex: Int, onSelect: (Int) -
                     ),
                 contentAlignment = Alignment.Center,
             ) {
-                SIcon(item.icon, contentDescription = item.label, tint = if (active) colors.text else colors.textMuted, size = 26.dp)
+                SIcon(item.icon, contentDescription = item.label, tint = if (active) colors.text else colors.textMuted, size = SintoniaTheme.sizes.iconMenu)
             }
         }
     }

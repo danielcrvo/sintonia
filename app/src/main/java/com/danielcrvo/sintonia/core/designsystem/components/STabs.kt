@@ -28,7 +28,6 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
 @Composable
@@ -40,7 +39,7 @@ fun STabs(
 ) {
     val colors = SintoniaTheme.colors
     val strokes = SintoniaTheme.strokes
-    val tabPadding = SintoniaTheme.spacing.md - 2.dp
+    val tabPadding = SintoniaTheme.spacing.cozy
     val lefts = remember(tabs.size) { mutableStateListOf(*Array(tabs.size) { 0f }) }
     val widths = remember(tabs.size) { mutableStateListOf(*Array(tabs.size) { 0f }) }
     val index = selectedIndex.coerceIn(0, (tabs.size - 1).coerceAtLeast(0))

@@ -53,7 +53,6 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.semantics.dismiss
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Velocity
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
@@ -177,7 +176,7 @@ fun SheetSurface(
             .graphicsLayer { translationY = dragY }
             .nestedScroll(nested)
             .statusBarsPadding()
-            .heightIn(max = 640.dp)
+            .heightIn(max = SintoniaTheme.sizes.sheetMaxHeight)
             .clip(shape)
             .background(colors.surface)
             .border(SintoniaTheme.strokes.hairline, colors.border, shape)
@@ -203,7 +202,7 @@ fun SheetSurface(
             Box(
                 Modifier
                     .align(Alignment.CenterHorizontally)
-                    .size(width = 36.dp, height = 4.dp)
+                    .size(width = SintoniaTheme.sizes.sheetHandleWidth, height = SintoniaTheme.sizes.sheetHandleHeight)
                     .background(colors.borderStrong, RoundedCornerShape(SintoniaTheme.radii.pill)),
             )
             if (title != null) SText(title, style = SintoniaTheme.typography.subheading, maxLines = 2)
@@ -245,13 +244,13 @@ fun DialogSurface(
 ) {
     val colors = SintoniaTheme.colors
     val shape = RoundedCornerShape(SintoniaTheme.radii.card)
-    val maxWidth = if (SintoniaTheme.deviceClass == DeviceClass.Tv) 560.dp else 420.dp
+    val maxWidth = if (SintoniaTheme.deviceClass == DeviceClass.Tv) SintoniaTheme.sizes.dialogMaxWidthTv else SintoniaTheme.sizes.dialogMaxWidth
     Column(
         modifier = modifier
             .padding(SintoniaTheme.spacing.gutter)
             .widthIn(max = maxWidth)
             .fillMaxWidth()
-            .heightIn(max = 560.dp)
+            .heightIn(max = SintoniaTheme.sizes.dialogMaxHeight)
             .clip(shape)
             .background(colors.surface)
             .border(SintoniaTheme.strokes.hairline, colors.border, shape)

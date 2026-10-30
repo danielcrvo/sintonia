@@ -20,7 +20,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import kotlinx.coroutines.launch
 
@@ -67,7 +66,7 @@ fun SButton(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (leadingIcon != null) {
-            SIcon(icon = leadingIcon, contentDescription = null, tint = contentColor, size = 16.dp)
+            SIcon(icon = leadingIcon, contentDescription = null, tint = contentColor, size = SintoniaTheme.sizes.iconInline)
         }
         SText(
             text = text,

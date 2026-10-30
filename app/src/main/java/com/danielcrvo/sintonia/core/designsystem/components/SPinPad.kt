@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.R
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
@@ -38,7 +37,7 @@ fun SPinBoxes(
     val colors = SintoniaTheme.colors
     val shake = remember { Animatable(0f) }
     val reduced = SintoniaTheme.motion.isReduced
-    val amplitude = with(LocalDensity.current) { 8.dp.toPx() }
+    val amplitude = with(LocalDensity.current) { SintoniaTheme.spacing.sm.toPx() }
     LaunchedEffect(errorTick) {
         if (errorTick > 0 && !reduced) {
             repeat(3) {
@@ -56,7 +55,7 @@ fun SPinBoxes(
             val shape = RoundedCornerShape(SintoniaTheme.radii.control)
             Box(
                 modifier = Modifier
-                    .size(width = 52.dp, height = 56.dp)
+                    .size(width = SintoniaTheme.sizes.pinBoxWidth, height = SintoniaTheme.sizes.pinKey)
                     .background(colors.surface, shape)
                     .border(
                         SintoniaTheme.strokes.hairline,
@@ -69,7 +68,7 @@ fun SPinBoxes(
                     ),
                 contentAlignment = Alignment.Center,
             ) {
-                if (index < filled) Box(Modifier.size(10.dp).background(colors.text, CircleShape))
+                if (index < filled) Box(Modifier.size(SintoniaTheme.sizes.pinDot).background(colors.text, CircleShape))
             }
         }
     }
@@ -94,7 +93,7 @@ fun SPinPad(
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .height(56.dp)
+                    .height(SintoniaTheme.sizes.pinKey)
                     .sintoniaClickable(onClick = onBackspace, cornerRadius = SintoniaTheme.radii.control),
                 contentAlignment = Alignment.Center,
             ) {
@@ -110,7 +109,7 @@ private fun DigitKey(digit: Int, modifier: Modifier, onDigit: (Int) -> Unit) {
     val shape = RoundedCornerShape(SintoniaTheme.radii.control)
     Box(
         modifier = modifier
-            .height(56.dp)
+            .height(SintoniaTheme.sizes.pinKey)
             .sintoniaClickable(onClick = { onDigit(digit) }, cornerRadius = SintoniaTheme.radii.control)
             .background(colors.surface, shape)
             .border(SintoniaTheme.strokes.hairline, colors.border, shape),

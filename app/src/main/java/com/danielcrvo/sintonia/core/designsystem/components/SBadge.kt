@@ -12,7 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
@@ -45,12 +44,12 @@ fun SBadge(
 fun SLiveBadge(text: String, modifier: Modifier = Modifier) {
     val colors = SintoniaTheme.colors
     val shape = RoundedCornerShape(SintoniaTheme.radii.pill)
-    val dot = if (SintoniaTheme.deviceClass == DeviceClass.Tv) 8.dp else 6.dp
+    val dot = if (SintoniaTheme.deviceClass == DeviceClass.Tv) SintoniaTheme.sizes.dotLarge else SintoniaTheme.sizes.dotSmall
     Row(
         modifier = modifier
             .background(colors.liveBg, shape)
             .padding(horizontal = SintoniaTheme.spacing.sm, vertical = SintoniaTheme.spacing.xs / 2),
-        horizontalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.xs + 2.dp),
+        horizontalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.snug),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(Modifier.size(dot).background(colors.brand, CircleShape))

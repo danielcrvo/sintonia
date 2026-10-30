@@ -16,7 +16,6 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
 @Composable
@@ -29,10 +28,11 @@ fun SSeekBar(
     var dragFraction by remember { mutableFloatStateOf(-1f) }
     val fill = SintoniaTheme.colors.onImage
     val track = SintoniaTheme.colors.onImageTrack
+    val sizes = SintoniaTheme.sizes
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(32.dp)
+            .height(sizes.seekBarHeight)
             .pointerInput(durationMs) {
                 detectTapGestures { offset -> if (durationMs > 0) onSeek((offset.x / size.width * durationMs).toLong()) }
             }.pointerInput(durationMs) {
@@ -46,7 +46,7 @@ fun SSeekBar(
                     onHorizontalDrag = { change, _ -> dragFraction = (change.position.x / size.width).coerceIn(0f, 1f) },
                 )
             }.drawBehind {
-                val trackHeight = 4.dp.toPx()
+                val trackHeight = sizes.seekTrack.toPx()
                 val centerY = size.height / 2f
                 val fraction = if (dragFraction >= 0f) {
                     dragFraction
@@ -58,7 +58,7 @@ fun SSeekBar(
                 val radius = CornerRadius(trackHeight / 2f)
                 drawRoundRect(track, Offset(0f, centerY - trackHeight / 2f), Size(size.width, trackHeight), radius)
                 drawRoundRect(fill, Offset(0f, centerY - trackHeight / 2f), Size(size.width * fraction, trackHeight), radius)
-                drawCircle(fill, radius = 7.dp.toPx(), center = Offset(size.width * fraction, centerY))
+                drawCircle(fill, radius = sizes.seekThumbRadius.toPx(), center = Offset(size.width * fraction, centerY))
             },
     )
 }

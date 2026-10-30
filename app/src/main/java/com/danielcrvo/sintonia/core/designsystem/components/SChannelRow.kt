@@ -58,27 +58,27 @@ fun SChannelRow(
             text = data.number,
             style = SintoniaTheme.typography.mono,
             color = colors.textMuted,
-            modifier = Modifier.width(28.dp),
+            modifier = Modifier.width(SintoniaTheme.sizes.channelNumberWidth),
             textAlign = TextAlign.End,
             maxLines = 1,
         )
         Box(
             modifier = Modifier
-                .size(40.dp)
+                .size(SintoniaTheme.sizes.avatar)
                 .then(
                     if (playing) {
                         Modifier.border(SintoniaTheme.strokes.focus, colors.text, CircleShape)
                     } else {
                         Modifier.border(SintoniaTheme.strokes.hairline, colors.border, CircleShape)
                     },
-                ).padding(if (playing) 3.dp else 0.dp)
+                ).padding(if (playing) SintoniaTheme.sizes.ringGap else 0.dp)
                 .clip(CircleShape),
         ) {
             SImage(url = data.logoUrl, contentDescription = null, modifier = Modifier.matchParentSize())
         }
         Column(
             modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(2.dp),
+            verticalArrangement = Arrangement.spacedBy(SintoniaTheme.sizes.tightGap),
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(spacing.sm), verticalAlignment = Alignment.CenterVertically) {
                 SText(
@@ -99,7 +99,7 @@ fun SChannelRow(
             }
             val progress = data.progress
             if (progress != null) {
-                SProgressBar(progress = { progress }, modifier = Modifier.padding(top = 2.dp))
+                SProgressBar(progress = { progress }, modifier = Modifier.padding(top = SintoniaTheme.sizes.tightGap))
             }
         }
         SIconButton(

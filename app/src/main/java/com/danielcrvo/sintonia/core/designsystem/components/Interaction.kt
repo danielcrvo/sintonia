@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import kotlinx.coroutines.launch
@@ -101,7 +100,7 @@ fun Modifier.sintoniaClickable(
 }
 
 @Composable
-fun Modifier.sintoniaFocusable(cornerRadius: Dp = 8.dp, enabled: Boolean = true): Modifier {
+fun Modifier.sintoniaFocusable(cornerRadius: Dp = SintoniaTheme.radii.control, enabled: Boolean = true): Modifier {
     val interactionSource = remember { MutableInteractionSource() }
     return this
         .sintoniaFocusRing(interactionSource, cornerRadius)
