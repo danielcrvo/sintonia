@@ -18,8 +18,10 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
@@ -31,6 +33,7 @@ fun Modifier.sintoniaFocusRing(
     interactionSource: MutableInteractionSource,
     cornerRadius: Dp,
     focusScale: Float = 1f,
+    contrastColor: Color = Color.Unspecified,
 ): Modifier {
     val focused = interactionSource.collectIsFocusedAsState()
     val ringColor = SintoniaTheme.colors.focusRing
@@ -58,6 +61,17 @@ fun Modifier.sintoniaFocusRing(
                     cornerRadius = CornerRadius((cornerRadius.toPx() + offset).coerceAtLeast(0f)),
                     style = Stroke(width = stroke.focus.toPx()),
                 )
+                if (inside && contrastColor.isSpecified) {
+                    // A fill the same color as the ring would hide it, so a second ring sits just inside.
+                    val width = stroke.focus.toPx()
+                    drawRoundRect(
+                        color = contrastColor,
+                        topLeft = Offset(width * 1.5f, width * 1.5f),
+                        size = Size(size.width - width * 3f, size.height - width * 3f),
+                        cornerRadius = CornerRadius((cornerRadius.toPx() - width * 1.5f).coerceAtLeast(0f)),
+                        style = Stroke(width = width),
+                    )
+                }
             }
         }
 }
@@ -71,6 +85,7 @@ fun Modifier.sintoniaClickable(
     role: Role? = Role.Button,
     onLongClick: (() -> Unit)? = null,
     focusScale: Float = 1f,
+    ringContrast: Color = Color.Unspecified,
 ): Modifier {
     val interactionSource = remember { MutableInteractionSource() }
     val pressed = interactionSource.collectIsPressedAsState()
@@ -84,7 +99,7 @@ fun Modifier.sintoniaClickable(
         }
     }
     return this
-        .sintoniaFocusRing(interactionSource, cornerRadius, focusScale)
+        .sintoniaFocusRing(interactionSource, cornerRadius, focusScale, ringContrast)
         .graphicsLayer {
             this.alpha = if (enabled) alpha.value else DisabledAlpha
             scaleX = pressScale.value

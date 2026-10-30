@@ -57,8 +57,12 @@ fun SButton(
         modifier = modifier
             .height(height)
             .defaultMinSize(minWidth = height)
-            .sintoniaClickable(onClick = onClick, cornerRadius = radius, enabled = enabled)
-            .clip(shape)
+            .sintoniaClickable(
+                onClick = onClick,
+                cornerRadius = radius,
+                enabled = enabled,
+                ringContrast = if (primary) colors.background else Color.Unspecified,
+            ).clip(shape)
             .background(if (primary) colors.primary else colors.background)
             .then(if (primary) Modifier else Modifier.border(SintoniaTheme.strokes.hairline, colors.borderStrong, shape))
             .padding(horizontal = SintoniaTheme.spacing.lg),

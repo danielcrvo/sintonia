@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - The size of a picked list file follows the device formatting and language.
 - The progress bar of the current programme in the player moves while you watch a live channel.
 - The player controls hide once the stream starts playing, even when it was still loading after the usual four seconds.
+- On Android TV, a focused primary button now shows a visible focus ring.
 
 ## [1.0.0] - 2026-10-28
 
