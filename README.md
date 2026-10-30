@@ -48,7 +48,7 @@ You need JDK 17 or newer and the Android SDK.
 
 ```bash
 ./gradlew assembleDebug                                              # APK in app/build/outputs/apk/debug
-./gradlew ktlintCheck detekt lintDebug testDebugUnitTest assembleDebug   # the full check CI runs
+./gradlew ktlintCheck detekt lintDebug testDebugUnitTest assembleDebug   # the main checks CI runs
 ```
 
 The `scripts` folder has a mock Xtream server (`mock-xtream-server.mjs`, username and password `demo`) and a sample playlist generator (`generate-sample-playlist.mjs`), so you can test without a provider.

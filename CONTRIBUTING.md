@@ -53,6 +53,8 @@ Run the same checks CI runs. Everything has to pass:
 ./gradlew ktlintCheck detekt lintDebug testDebugUnitTest assembleDebug
 ```
 
+CI also builds the release variant with `./gradlew assembleRelease`, so run that too when you touch Gradle, R8 rules or the manifest.
+
 Add tests for behavior you change, and a screenshot test for any new screen. Add a line to the `Unreleased` section of [`CHANGELOG.md`](CHANGELOG.md) when the change is visible to users.
 
 ## Commits and pull requests
