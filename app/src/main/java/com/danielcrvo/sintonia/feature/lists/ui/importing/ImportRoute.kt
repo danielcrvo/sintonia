@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -20,13 +21,17 @@ fun ImportRoute(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    val currentOnFinished by rememberUpdatedState(onFinished)
+    val currentOnCancelled by rememberUpdatedState(onCancelled)
+    val currentOnEditDetails by rememberUpdatedState(onEditDetails)
+
     LaunchedEffect(listId) { viewModel.start(listId, discardOnExit = isNewList) }
     LaunchedEffect(viewModel) {
         viewModel.effects.collect { effect ->
             when (effect) {
-                ImportEffect.Finished -> onFinished()
-                ImportEffect.Cancelled -> onCancelled()
-                ImportEffect.EditDetails -> onEditDetails()
+                ImportEffect.Finished -> currentOnFinished()
+                ImportEffect.Cancelled -> currentOnCancelled()
+                ImportEffect.EditDetails -> currentOnEditDetails()
             }
         }
     }

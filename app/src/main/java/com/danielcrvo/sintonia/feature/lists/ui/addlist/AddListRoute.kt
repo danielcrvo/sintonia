@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -29,10 +30,12 @@ fun AddListRoute(
         if (uri != null) viewModel.onFilePicked(uri)
     }
 
+    val currentOnStartImport by rememberUpdatedState(onStartImport)
+
     LaunchedEffect(viewModel) {
         viewModel.effects.collect { effect ->
             when (effect) {
-                is AddListEffect.StartImport -> onStartImport(effect.listId)
+                is AddListEffect.StartImport -> currentOnStartImport(effect.listId)
                 AddListEffect.FileReadFailed -> toast.show(readFailed)
             }
         }

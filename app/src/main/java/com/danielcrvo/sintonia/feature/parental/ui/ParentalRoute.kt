@@ -3,6 +3,7 @@ package com.danielcrvo.sintonia.feature.parental.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -17,11 +18,13 @@ fun ParentalRoute(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val pin by viewModel.pinState.collectAsStateWithLifecycle()
 
+    val currentOnBack by rememberUpdatedState(onBack)
+
     LaunchedEffect(viewModel) { viewModel.onOpen() }
     LaunchedEffect(viewModel) {
         viewModel.effects.collect { effect ->
             when (effect) {
-                ParentalEffect.Leave -> onBack()
+                ParentalEffect.Leave -> currentOnBack()
             }
         }
     }
