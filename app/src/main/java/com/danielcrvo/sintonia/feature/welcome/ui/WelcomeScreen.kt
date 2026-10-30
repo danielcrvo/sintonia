@@ -20,6 +20,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.coerceAtLeast
+import androidx.compose.ui.unit.dp
 import com.danielcrvo.sintonia.R
 import com.danielcrvo.sintonia.core.designsystem.components.ButtonSize
 import com.danielcrvo.sintonia.core.designsystem.components.SButton
@@ -42,7 +44,7 @@ fun WelcomeScreen(onAddList: () -> Unit, modifier: Modifier = Modifier) {
             .statusBarsPadding()
             .navigationBarsPadding()
             .tvSafeArea()
-            .padding(horizontal = spacing.gutter, vertical = spacing.xxl),
+            .padding(horizontal = spacing.gutter, vertical = (spacing.xxl - spacing.safeVertical).coerceAtLeast(0.dp)),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Column(
@@ -50,8 +52,8 @@ fun WelcomeScreen(onAddList: () -> Unit, modifier: Modifier = Modifier) {
                 .weight(1f)
                 .widthIn(max = SintoniaTheme.sizes.contentMaxWidth)
                 .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-                .padding(bottom = spacing.lg),
+                .padding(bottom = spacing.lg)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(spacing.xxl, Alignment.CenterVertically),
         ) {
             Box(
