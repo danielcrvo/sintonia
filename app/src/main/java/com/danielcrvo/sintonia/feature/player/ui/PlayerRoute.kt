@@ -80,7 +80,7 @@ fun PlayerRoute(
         }
     }
 
-    BackHandler {
+    val handleBack = {
         when {
             state.panel != null -> viewModel.onClosePanel()
             state.upNext != null -> viewModel.onCancelNext()
@@ -88,6 +88,8 @@ fun PlayerRoute(
             else -> close()
         }
     }
+    val currentBack by rememberUpdatedState(handleBack)
+    BackHandler(onBack = handleBack)
 
     val actions = remember(viewModel, onClose) {
         PlayerActions(
@@ -110,6 +112,8 @@ fun PlayerRoute(
             onPlayNextNow = viewModel::onPlayNextNow,
             onCancelNext = viewModel::onCancelNext,
             onCycleFit = { viewModel.onCycleFit(state.videoFit) },
+            // The first Back key on TV never reaches the BackHandler, so the screen handles the key itself.
+            onBackKey = { currentBack() },
         )
     }
 

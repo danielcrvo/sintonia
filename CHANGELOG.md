@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - On Android TV, the arrow keys move between the fields of a form without opening the keyboard, which opens when you press OK on a field.
 - On Android TV, the Home highlight card fits the screen, the header and side menu keep a margin from the top edge, and the focus ring around a poster leaves room around its title.
 - On Android TV, Settings, Categories, My lists, Parental control and Search keep a margin from the top and bottom edges of the screen.
+- On Android TV, the first press of Back in the player leaves it, including on the playback error screen.
 
 ## [1.0.0] - 2026-10-28
 

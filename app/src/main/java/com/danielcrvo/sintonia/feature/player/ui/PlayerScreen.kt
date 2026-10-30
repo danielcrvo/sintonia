@@ -94,6 +94,7 @@ class PlayerActions(
     val onCancelNext: () -> Unit = {},
     val onKeepControls: () -> Unit = {},
     val onCycleFit: () -> Unit = {},
+    val onBackKey: () -> Unit = {},
 )
 
 @Composable
@@ -228,6 +229,10 @@ private fun handleKey(event: androidx.compose.ui.input.key.KeyEvent, state: Play
             true
         } else {
             false
+        }
+        Key.Back -> {
+            actions.onBackKey()
+            true
         }
         Key.MediaPlayPause, Key.MediaPlay, Key.MediaPause -> {
             actions.onPlayPause()
