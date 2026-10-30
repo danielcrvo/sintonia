@@ -5,6 +5,7 @@ import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -68,7 +69,7 @@ class CatalogScreenshotTest {
 
     @Test
     fun catalogGrid() = shot("catalog-grid") {
-        val items = flowOf(PagingData.from(posters)).collectAsLazyPagingItems()
+        val items = remember { flowOf(PagingData.from(posters)) }.collectAsLazyPagingItems()
         CatalogScreen(
             labels = labels,
             state = CatalogUiState(categories = categories, sort = CatalogSort.Name),
@@ -83,7 +84,7 @@ class CatalogScreenshotTest {
 
     @Test
     fun catalogEmpty() = shot("catalog-empty") {
-        val items = flowOf(PagingData.empty<PosterItem>()).collectAsLazyPagingItems()
+        val items = remember { flowOf(PagingData.empty<PosterItem>()) }.collectAsLazyPagingItems()
         CatalogScreen(
             labels = labels,
             state = CatalogUiState(categories = categories, selectedCategory = categories[0]),
