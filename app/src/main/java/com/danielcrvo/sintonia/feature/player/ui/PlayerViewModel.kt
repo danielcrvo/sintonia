@@ -424,7 +424,9 @@ class PlayerViewModel
             hideJob?.cancel()
             hideJob = viewModelScope.launch {
                 delay(ControlsHideMillis)
-                if (local.value.panel == null && playback.state.value.status == PlaybackStatus.Playing) hideControls()
+                // A stream that is still loading keeps the controls up until it plays.
+                playback.state.first { it.status == PlaybackStatus.Playing }
+                if (local.value.panel == null) hideControls()
             }
         }
 
