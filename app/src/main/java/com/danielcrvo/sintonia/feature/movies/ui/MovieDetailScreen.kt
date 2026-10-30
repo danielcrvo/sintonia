@@ -56,7 +56,11 @@ fun MovieDetailScreen(
                 icon = SIcons.Film,
                 title = stringResource(R.string.detail_not_found),
                 modifier = modifier.background(colors.background),
-                action = { SButton(stringResource(R.string.action_back), onBack, variant = ButtonVariant.Secondary) },
+                action = if (SintoniaTheme.deviceClass == DeviceClass.Tv) {
+                    null
+                } else {
+                    { SButton(stringResource(R.string.action_back), onBack, variant = ButtonVariant.Secondary) }
+                },
             )
         }
         return

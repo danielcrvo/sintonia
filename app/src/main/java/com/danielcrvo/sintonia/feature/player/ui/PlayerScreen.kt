@@ -69,6 +69,7 @@ import com.danielcrvo.sintonia.core.designsystem.components.SSeekBar
 import com.danielcrvo.sintonia.core.designsystem.components.SSpinner
 import com.danielcrvo.sintonia.core.designsystem.components.SText
 import com.danielcrvo.sintonia.core.designsystem.components.sintoniaClickable
+import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 import com.danielcrvo.sintonia.core.player.PlaybackErrorKind
 import com.danielcrvo.sintonia.core.player.PlaybackKind
@@ -279,7 +280,7 @@ private fun Modifier.symmetricSafeDrawingPadding(): Modifier {
 
 @Composable
 private fun TopBar(state: PlayerUiState, actions: PlayerActions, modifier: Modifier) {
-    val tv = SintoniaTheme.deviceClass == com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass.Tv
+    val tv = SintoniaTheme.deviceClass == DeviceClass.Tv
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -460,7 +461,9 @@ private fun ErrorOverlay(error: PlaybackErrorKind?, onRetry: () -> Unit, onBack:
             textAlign = TextAlign.Center,
         )
         Row(horizontalArrangement = Arrangement.spacedBy(SintoniaTheme.spacing.sm), modifier = Modifier.padding(top = SintoniaTheme.spacing.sm)) {
-            SButton(stringResource(R.string.action_back), onBack, variant = ButtonVariant.Secondary)
+            if (SintoniaTheme.deviceClass != DeviceClass.Tv) {
+                SButton(stringResource(R.string.action_back), onBack, variant = ButtonVariant.Secondary)
+            }
             SButton(stringResource(R.string.error_retry), onRetry, retryModifier)
         }
     }

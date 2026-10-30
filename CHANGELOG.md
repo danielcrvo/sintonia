@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - On Android TV, the screen shown while a list loads no longer gets cut off. It now uses two columns and keeps a margin from the screen edge.
 - On Android TV, the welcome and add list screens also keep a margin from the top and bottom edges.
 - The next episode card in the player now shows the season and episode code in the app language, so English shows S1 · E5 instead of T1 · E5.
+- On Android TV, the not found screens and the player error no longer show a Back button. The remote's Back key already leaves them.
 
 ## [1.0.0] - 2026-10-28
 
