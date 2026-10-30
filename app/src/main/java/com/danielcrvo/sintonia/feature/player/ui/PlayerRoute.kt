@@ -8,6 +8,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -37,17 +38,18 @@ fun PlayerRoute(
     val view = LocalView.current
     val context = LocalContext.current
 
+    val currentOnClose by rememberUpdatedState(onClose)
+
     LaunchedEffect(request) { viewModel.start(request) }
     LaunchedEffect(viewModel) {
         viewModel.effects.collect { effect ->
             when (effect) {
-                PlayerEffect.Close -> onClose()
+                PlayerEffect.Close -> currentOnClose()
             }
         }
     }
     LifecycleEventEffect(Lifecycle.Event.ON_STOP) {
-        viewModel.playback.pause()
-        viewModel.saveNow()
+        viewModel.onStop()
     }
 
     val close = {
@@ -55,7 +57,7 @@ fun PlayerRoute(
         onClose()
     }
 
-    DisposableEffect(Unit) {
+    DisposableEffect(deviceClass, view) {
         val activity = context as? Activity
         val window = activity?.window
         val controller = window?.let { WindowCompat.getInsetsController(it, view) }

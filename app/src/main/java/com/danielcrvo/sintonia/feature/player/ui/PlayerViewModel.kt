@@ -349,6 +349,11 @@ class PlayerViewModel
             }
         }
 
+        fun onStop() {
+            playback.pause()
+            saveNow()
+        }
+
         fun saveNow() {
             val session = playback.state.value.session ?: return
             if (session.kind == PlaybackKind.Live) return
