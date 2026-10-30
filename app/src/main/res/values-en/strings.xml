@@ -201,7 +201,7 @@
     <string name="settings_updated">Updated %1$s</string>
     <string name="settings_never_updated">Not loaded yet</string>
     <string name="language_auto">Automatic (device)</string>
-    <string name="language_pt">Portuguese (Brazil)</string>
+    <string name="language_pt">Português (Brasil)</string>
     <string name="language_en">English</string>
     <string name="language_es">Español</string>
     <string name="track_language_auto">Automatic</string>
