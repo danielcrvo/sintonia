@@ -28,6 +28,8 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.danielcrvo.sintonia.core.designsystem.theme.DeviceClass
 import com.danielcrvo.sintonia.core.designsystem.theme.SintoniaTheme
 
 @Composable
@@ -40,6 +42,8 @@ fun STabs(
     val colors = SintoniaTheme.colors
     val strokes = SintoniaTheme.strokes
     val tabPadding = SintoniaTheme.spacing.cozy
+    // On TV the first tab lines up with the screen content instead of touching the edge.
+    val startInset = if (SintoniaTheme.deviceClass == DeviceClass.Tv) SintoniaTheme.spacing.gutter - tabPadding else 0.dp
     val lefts = remember(tabs.size) { mutableStateListOf(*Array(tabs.size) { 0f }) }
     val widths = remember(tabs.size) { mutableStateListOf(*Array(tabs.size) { 0f }) }
     val index = selectedIndex.coerceIn(0, (tabs.size - 1).coerceAtLeast(0))
@@ -74,6 +78,7 @@ fun STabs(
             modifier = Modifier
                 .horizontalScroll(scroll)
                 .focusRestorer(selectedTab)
+                .padding(start = startInset)
                 .height(SintoniaTheme.heights.tabs)
                 .drawBehind {
                     val pad = tabPadding.toPx()
